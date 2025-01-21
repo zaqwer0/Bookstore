@@ -16,16 +16,23 @@ import java.util.UUID;
 @Table(name = "books")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     @Column(nullable = false)
     private String title;
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
     private Author author;
+
     @Column(nullable = false)
     private double price;
+
     @Column(nullable = false)
     private Integer publishedYear;
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bookstore_id", nullable = false)
     private Bookstore bookstore;
 }
