@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ public class Order {
 
     @Column(nullable = false)
     @CreationTimestamp
-    private Date orderDate;
+    private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
