@@ -1,10 +1,18 @@
 services:
   postgres:
-    image: postgres:11.1-alpine
+    image: postgres:17
+    container_name: bookstore_postgres
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT}:5432"
     environment:
-      - TZ=Europe/Moscow
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=data
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    env_file: .env
+
+
+volumes:
+  postgres_data:

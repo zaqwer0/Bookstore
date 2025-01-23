@@ -1,0 +1,42 @@
+package by.example.bookstore_api.controller;
+
+import by.example.bookstore_api.model.dto.request.AuthorRequestDto;
+import by.example.bookstore_api.model.dto.response.AuthorResponseDto;
+import by.example.bookstore_api.service.AuthorService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("authors")
+public class AuthorController {
+
+    private final AuthorService authorService;
+
+    @GetMapping("{id}")
+    public ResponseEntity<AuthorResponseDto> findById(@PathVariable("id") UUID authorId) {
+        return ResponseEntity.ok(authorService.findById(authorId));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AuthorResponseDto>> findAll() {
+        return ResponseEntity.ok(authorService.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> save(@RequestBody AuthorRequestDto authorRequestDto) {
+        authorService.save(authorRequestDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable("id") UUID authorId) {
+        authorService.deleteById(authorId);
+        return ResponseEntity.noContent().build();
+    }
+}
