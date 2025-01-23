@@ -33,6 +33,12 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Void> update(@PathVariable("id") UUID bookId, @RequestBody BookRequestDto bookRequestDto) {
+        bookService.update(bookId, bookRequestDto);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteById(@PathVariable("id") UUID bookId) {
         bookService.delete(bookId);

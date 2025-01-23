@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: bookstore_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${database_name}
+      POSTGRES_USER: ${database_user}
+      POSTGRES_PASSWORD: ${database_password}
+    restart: always
+    env_file: .env
+

@@ -34,6 +34,13 @@ public class BookstoreController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Void> update (@PathVariable("id") UUID bookstoreId, @RequestBody BookstoreRequestDto bookstoreRequestDto) {
+        bookstoreService.update(bookstoreId, bookstoreRequestDto);
+        return ResponseEntity.ok().build();
+    }
+
+
     @RequestMapping("{id}")
     public ResponseEntity<Void> delete (@PathVariable("id") UUID bookstoreId) {
         bookstoreService.delete(bookstoreId);

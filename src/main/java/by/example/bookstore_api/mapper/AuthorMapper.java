@@ -4,12 +4,12 @@ import by.example.bookstore_api.model.dto.request.AuthorRequestDto;
 import by.example.bookstore_api.model.dto.response.AuthorResponseDto;
 import by.example.bookstore_api.model.entity.Author;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.MappingConstants;
 
 import java.util.List;
 
-@Mapper
+
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface AuthorMapper {
 
     Author toAuthor(AuthorResponseDto authorResponseDto);

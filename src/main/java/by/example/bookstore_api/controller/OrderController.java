@@ -34,6 +34,12 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Void> update(@PathVariable("id") UUID orderId, @RequestBody OrderRequestDto orderRequestDto) {
+        orderService.update(orderId, orderRequestDto);
+        return ResponseEntity.ok().build();
+    }
+
     @RequestMapping("{id}")
     public ResponseEntity <Void> delete(@PathVariable("id") UUID orderId) {
         orderService.delete(orderId);

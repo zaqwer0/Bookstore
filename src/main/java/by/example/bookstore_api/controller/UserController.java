@@ -34,6 +34,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Void> update(@PathVariable("id") UUID id, @RequestBody UserRequestDto userRequestDto) {
+        userService.update(id, userRequestDto);
+        return ResponseEntity.ok().build();
+    }
+
     @RequestMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") UUID id) {
         userService.delete(id);

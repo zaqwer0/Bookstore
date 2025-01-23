@@ -17,8 +17,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BookstoreService {
 
-    private BookstoreRepository bookstoreRepository;
-    private BookStoreMapper bookStoreMapper;
+    private final BookstoreRepository bookstoreRepository;
+    private final BookStoreMapper bookStoreMapper;
 
     public BookstoreResponseDto findById(UUID BookstoreId) {
         return bookstoreRepository.findById(BookstoreId)

@@ -29,7 +29,7 @@ public class UserService {
     }
 
     public void save(UserRequestDto userRequestDto) {
-        if (userRepository.existsByUsername(userRequestDto.username(), userRequestDto.password())) {
+        if (userRepository.existsByEmail(userRequestDto.email())) {
             throw new IllegalArgumentException(String.format("Username %s already exists", userRequestDto.username()));
         }
         userRepository.save(userMapper.toUser(userRequestDto));
@@ -39,7 +39,7 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public void update( UUID userId, UserRequestDto userRequestDto) {
+    public void update(UUID userId, UserRequestDto userRequestDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new EntityNotFoundException(String.format("User with id %s not found", userId))
