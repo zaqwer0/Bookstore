@@ -12,15 +12,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AuthorServiceTest {
     @Mock
@@ -45,7 +42,7 @@ class AuthorServiceTest {
         author = new Author();
         author.setId(authorId);
         author.setName("John");
-        author.setLastName("Doe");
+        author.setLastname("Doe");
 
         authorRequestDto = new AuthorRequestDto("John", "Doe");
         authorResponseDto = new AuthorResponseDto(authorId, "John", "Doe");
@@ -80,24 +77,24 @@ class AuthorServiceTest {
 
     @Test
     void save_ShouldSaveAuthor_WhenAuthorDoesNotExist() {
-        when(authorRepository.existsByLastNameAndName(authorRequestDto.name(), authorRequestDto.lastname())).thenReturn(false);
+        when(authorRepository.existsByLastnameAndName(authorRequestDto.name(), authorRequestDto.lastname())).thenReturn(false);
         when(authorMapper.toAuthor(authorRequestDto)).thenReturn(author);
 
         authorService.save(authorRequestDto);
 
-        verify(authorRepository).existsByLastNameAndName(authorRequestDto.name(), authorRequestDto.lastname());
+        verify(authorRepository).existsByLastnameAndName(authorRequestDto.name(), authorRequestDto.lastname());
         verify(authorRepository).save(author);
         verify(authorMapper).toAuthor(authorRequestDto);
     }
 
     @Test
     void save_ShouldThrowIllegalArgumentException_WhenAuthorAlreadyExists() {
-        when(authorRepository.existsByLastNameAndName(authorRequestDto.name(), authorRequestDto.lastname())).thenReturn(true);
+        when(authorRepository.existsByLastnameAndName(authorRequestDto.name(), authorRequestDto.lastname())).thenReturn(true);
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> authorService.save(authorRequestDto));
 
         assertEquals(String.format("Author '%s %s' already exists", authorRequestDto.name(), authorRequestDto.lastname()), exception.getMessage());
-        verify(authorRepository).existsByLastNameAndName(authorRequestDto.name(), authorRequestDto.lastname());
+        verify(authorRepository).existsByLastnameAndName(authorRequestDto.name(), authorRequestDto.lastname());
         verifyNoInteractions(authorMapper);
     }
 
@@ -118,12 +115,12 @@ class AuthorServiceTest {
 
         verify(authorRepository).findById(authorId);
         assertEquals("John", author.getName());
-        assertEquals("Doe", author.getLastName());
+        assertEquals("Doe", author.getLastname());
         verify(authorRepository).save(author);
     }
     @Test
     void findByLastName() {
-        when(authorRepository.findByLastName("Doe")).thenReturn(Optional.of(author));
+        when(authorRepository.findByLastname("Doe")).thenReturn(Optional.of(author));
         when(authorMapper.toAuthorDto(author)).thenReturn(authorResponseDto);
 
         AuthorResponseDto result = authorService.findByLastName("Doe");
@@ -131,7 +128,7 @@ class AuthorServiceTest {
         assertNotNull(result);
         assertEquals("John", result.name());
         assertEquals("Doe", result.lastname());
-        verify(authorRepository).findByLastName("Doe");
+        verify(authorRepository).findByLastname("Doe");
         verify(authorMapper).toAuthorDto(author);
     }
 }

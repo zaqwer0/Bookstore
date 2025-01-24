@@ -35,7 +35,7 @@ public class BookService {
     }
 
     public void save(BookRequestDto bookRequestDto) {
-        if (bookRepository.existsByTitleAndAuthor_LastName(bookRequestDto.title(), bookRequestDto.authorLastName())) {
+        if (bookRepository.existsByTitleAndAuthorLastname(bookRequestDto.title(), bookRequestDto.authorLastName())) {
             throw new IllegalArgumentException(String.format("Book with title %s already exists", bookRequestDto.title()));
         }
         bookRepository.save(bookMapper.toBook(bookRequestDto));

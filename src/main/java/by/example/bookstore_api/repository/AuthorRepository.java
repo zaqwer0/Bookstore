@@ -15,7 +15,7 @@ public interface AuthorRepository extends CrudRepository<Author, UUID> {
     @Override
     List<Author> findAll();
 
-    Optional<Author> findByLastName(String lastName);
+    Optional<Author> findByLastname(String lastName);
 
-    boolean existsByLastNameAndName(String lastName, String name);
+    boolean existsByLastnameAndName(String lastName, String name);
 }

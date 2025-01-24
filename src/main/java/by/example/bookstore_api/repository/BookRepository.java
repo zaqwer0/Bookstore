@@ -18,5 +18,5 @@ public interface BookRepository extends CrudRepository<Book, UUID> {
 
     Optional<Book> findByTitle(String title);
 
-    boolean existsByTitleAndAuthor_LastName(String title, String authorLastName);
+    boolean existsByTitleAndAuthorLastname(String title, String authorLastName);
 }

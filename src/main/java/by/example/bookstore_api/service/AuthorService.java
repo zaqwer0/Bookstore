@@ -31,7 +31,7 @@ public class AuthorService {
     }
 
     public void save(AuthorRequestDto authorRequestDto) {
-        if (authorRepository.existsByLastNameAndName(authorRequestDto.name(), authorRequestDto.lastname())) {
+        if (authorRepository.existsByLastnameAndName(authorRequestDto.name(), authorRequestDto.lastname())) {
             throw new IllegalArgumentException(String.format("Author '%s %s' already exists", authorRequestDto.name(), authorRequestDto.lastname()));
         }
         authorRepository.save(authorMapper.toAuthor(authorRequestDto));
@@ -47,12 +47,12 @@ public class AuthorService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Author with id=%s not found", authorId)));
 
         author.setName(authorRequestDto.name());
-        author.setLastName(authorRequestDto.lastname());
+        author.setLastname(authorRequestDto.lastname());
         authorRepository.save(author);
     }
 
     public AuthorResponseDto findByLastName(String lastName) {
-        return authorRepository.findByLastName(lastName)
+        return authorRepository.findByLastname(lastName)
                 .map(authorMapper::toAuthorDto)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Author with lastName=%s not found", lastName)));
     }
