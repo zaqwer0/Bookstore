@@ -6,12 +6,13 @@ import by.example.bookstore_api.model.dto.response.BookResponseDto;
 import by.example.bookstore_api.model.entity.Book;
 import by.example.bookstore_api.repository.BookRepository;
 import by.example.bookstore_api.service.strategy.interfaces.BookSortedStrategy;
-import by.example.bookstore_api.service.validator.interfaces.BookValidator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,7 @@ public class BookService {
         return bookMapper.toBooksResponse(books);
     }
 
+    @Cacheable("bookCache")
     public BookResponseDto findById(UUID bookId) {
         return bookRepository.findById(bookId)
                 .map(bookMapper::toBookDto)
