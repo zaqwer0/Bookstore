@@ -4,10 +4,9 @@ import by.example.bookstore_api.mapper.BookMapper;
 import by.example.bookstore_api.model.dto.request.BookRequestDto;
 import by.example.bookstore_api.model.dto.response.BookResponseDto;
 import by.example.bookstore_api.model.entity.Book;
-import by.example.bookstore_api.repository.AuthorRepository;
 import by.example.bookstore_api.repository.BookRepository;
-import by.example.bookstore_api.repository.BookstoreRepository;
 import by.example.bookstore_api.service.strategy.interfaces.BookSortedStrategy;
+import by.example.bookstore_api.service.validator.interfaces.BookValidator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +25,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final Map<String, BookSortedStrategy> bookSortedStrategies;
+    private final BookValidationService bookValidationService;
 
     public List<BookResponseDto> findAllSorted(String sortType) {
 
@@ -54,6 +54,9 @@ public class BookService {
     }
 
     public void save(BookRequestDto bookRequestDto) {
+
+        bookValidationService.validate(bookRequestDto);
+
         if (bookRepository.existsByTitleAndAuthorLastname(bookRequestDto.title(), bookRequestDto.authorLastName())) {
             throw new IllegalArgumentException(String.format("Book with title %s already exists", bookRequestDto.title()));
         }
@@ -68,6 +71,9 @@ public class BookService {
     // changing author name or bookstore name
     @Transactional
     public void update(UUID bookId, BookRequestDto bookRequestDto) {
+
+        bookValidationService.validate(bookRequestDto);
+
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Book with id %s not found", bookId)));
 
