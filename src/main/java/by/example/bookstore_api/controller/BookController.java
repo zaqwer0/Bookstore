@@ -4,6 +4,7 @@ import by.example.bookstore_api.model.dto.request.BookRequestDto;
 import by.example.bookstore_api.model.dto.response.BookResponseDto;
 import by.example.bookstore_api.service.BookService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +12,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("books")
 public class BookController {
 
     private final BookService bookService;
+
+
+    @GetMapping("/sorted")
+    public ResponseEntity<List<BookResponseDto>> findAllSorted(@RequestParam String sortBy) {
+        log.info("Received sortBy parameter: {}", sortBy);
+        try {
+            List<BookResponseDto> sortedBooks = bookService.findAllSorted(sortBy);
+            return ResponseEntity.ok(sortedBooks);
+        } catch (IllegalArgumentException e) {
+            log.error("Error during sorting: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
     @GetMapping("{id}")
     public ResponseEntity<BookResponseDto> findById(@PathVariable("id") UUID bookId) {

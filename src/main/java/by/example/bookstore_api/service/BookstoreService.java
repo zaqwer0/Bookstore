@@ -20,10 +20,10 @@ public class BookstoreService {
     private final BookstoreRepository bookstoreRepository;
     private final BookStoreMapper bookStoreMapper;
 
-    public BookstoreResponseDto findById(UUID BookstoreId) {
-        return bookstoreRepository.findById(BookstoreId)
+    public BookstoreResponseDto findById(UUID bookstoreId) {
+        return bookstoreRepository.findById(bookstoreId)
                 .map(bookStoreMapper::toBookstoreDto)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Bookstore with id %s not found", BookstoreId)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Bookstore with id %s not found", bookstoreId)));
     }
 
     public List<BookstoreResponseDto> findAll() {
@@ -37,8 +37,8 @@ public class BookstoreService {
         bookstoreRepository.save(bookStoreMapper.toBookstore(bookstoreRequestDto));
     }
 
-    public void delete(UUID BookstoreId) {
-        bookstoreRepository.deleteById(BookstoreId);
+    public void delete(UUID bookstoreId) {
+        bookstoreRepository.deleteById(bookstoreId);
     }
 
     @Transactional

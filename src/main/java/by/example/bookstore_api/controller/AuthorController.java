@@ -4,6 +4,7 @@ import by.example.bookstore_api.model.dto.request.AuthorRequestDto;
 import by.example.bookstore_api.model.dto.response.AuthorResponseDto;
 import by.example.bookstore_api.service.AuthorService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("authors")
@@ -20,7 +22,13 @@ public class AuthorController {
 
     @GetMapping("{id}")
     public ResponseEntity<AuthorResponseDto> findById(@PathVariable("id") UUID authorId) {
-        return ResponseEntity.ok(authorService.findById(authorId));
+
+        log.info("got request on getting author with ID: {}", authorId);
+
+        AuthorResponseDto authorResponse = authorService.findById(authorId);
+
+        log.info("Author with ID {} have been found: {}", authorId, authorResponse);
+        return ResponseEntity.ok(authorResponse);
     }
 
     @GetMapping

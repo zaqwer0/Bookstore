@@ -7,22 +7,41 @@ import by.example.bookstore_api.model.entity.Book;
 import by.example.bookstore_api.repository.AuthorRepository;
 import by.example.bookstore_api.repository.BookRepository;
 import by.example.bookstore_api.repository.BookstoreRepository;
+import by.example.bookstore_api.service.strategy.interfaces.BookSortedStrategy;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class BookService {
 
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
-    private final AuthorRepository authorRepository;
-    private final BookstoreRepository bookstoreRepository;
+    private final Map<String, BookSortedStrategy> bookSortedStrategies;
+
+    public List<BookResponseDto> findAllSorted(String sortType) {
+
+        List<Book> books = bookRepository.findAll();
+
+        BookSortedStrategy strategy = bookSortedStrategies.get(sortType);
+
+        if (strategy == null) {
+            throw new IllegalArgumentException(
+                    String.format("Sorting strategy '%s' not found", sortType)
+            );
+        }
+        books = strategy.sortBooks(books);
+
+        return bookMapper.toBooksResponse(books);
+    }
 
     public BookResponseDto findById(UUID bookId) {
         return bookRepository.findById(bookId)
