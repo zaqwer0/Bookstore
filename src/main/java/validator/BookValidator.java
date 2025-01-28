@@ -1,4 +1,4 @@
-package by.example.bookstore_api.service.validator.interfaces;
+package validator;
 
 import by.example.bookstore_api.model.dto.request.BookRequestDto;
 import by.example.bookstore_api.model.entity.Book;

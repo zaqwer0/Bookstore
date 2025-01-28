@@ -5,12 +5,16 @@ import by.example.bookstore_api.model.dto.request.BookRequestDto;
 import by.example.bookstore_api.model.dto.response.BookResponseDto;
 import by.example.bookstore_api.model.entity.Book;
 import by.example.bookstore_api.repository.BookRepository;
-import by.example.bookstore_api.service.strategy.interfaces.BookSortedStrategy;
+import by.example.bookstore_api.strategy.BookSortedStrategy;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -45,6 +49,10 @@ public class BookService {
         return bookMapper.toBooksResponse(books);
     }
 
+    public List<Book> findBooksWithSorting(String field) {
+        return bookRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+    }
+
     @Cacheable("bookCache")
     public BookResponseDto findById(UUID bookId) {
         return bookRepository.findById(bookId)
@@ -52,8 +60,10 @@ public class BookService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Book with id %s not found", bookId)));
     }
 
-    public List<BookResponseDto> findAll() {
-        return bookMapper.toBooksResponse(bookRepository.findAll());
+    public Page<BookResponseDto> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Book> books = bookRepository.findAll(pageable);
+        return books.map(bookMapper::toBookDto);
     }
 
     public void save(BookRequestDto bookRequestDto) {

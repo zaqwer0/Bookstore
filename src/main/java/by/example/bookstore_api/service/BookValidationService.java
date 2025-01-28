@@ -1,7 +1,7 @@
 package by.example.bookstore_api.service;
 
 import by.example.bookstore_api.model.dto.request.BookRequestDto;
-import by.example.bookstore_api.service.validator.interfaces.BookValidator;
+import validator.BookValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

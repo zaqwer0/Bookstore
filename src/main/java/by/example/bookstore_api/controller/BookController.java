@@ -2,9 +2,11 @@ package by.example.bookstore_api.controller;
 
 import by.example.bookstore_api.model.dto.request.BookRequestDto;
 import by.example.bookstore_api.model.dto.response.BookResponseDto;
+import by.example.bookstore_api.model.entity.Book;
 import by.example.bookstore_api.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,10 +39,11 @@ public class BookController {
     public ResponseEntity<BookResponseDto> findById(@PathVariable("id") UUID bookId) {
         return ResponseEntity.ok(bookService.findById(bookId));
     }
+
     @GetMapping
-    //todo where is pagination?
-    public ResponseEntity<List<BookResponseDto>> findAll() {
-        return ResponseEntity.ok(bookService.findAll());
+    public ResponseEntity<List<BookResponseDto>> findAll(int page, int size) {
+        Page<BookResponseDto> bookResponseDtos = bookService.findAll(page, size);
+        return ResponseEntity.ok(bookResponseDtos.getContent());
     }
 
     @PostMapping

@@ -1,4 +1,4 @@
-package by.example.bookstore_api.service.strategy.interfaces;
+package by.example.bookstore_api.strategy;
 
 import by.example.bookstore_api.model.entity.Book;
 
