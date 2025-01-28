@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TitleValidator implements BookValidator {
 
+    //todo WTF is it?
     private BookValidator bookValidator;
 
     @Override

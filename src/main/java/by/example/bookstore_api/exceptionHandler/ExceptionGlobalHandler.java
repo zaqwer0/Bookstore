@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
+//todo where is higher level Exception handler??
 public class ExceptionGlobalHandler {
     private static final String ERROR_LOGGING_USING_URI_URL = "An error occurred: message='{}', URL='{}'";
 
+    //todo move to config package
+    //provide custom exception
     @ExceptionHandler(value = EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionResponseDto entityNotFoundException(HttpServletRequest request, Exception exception) {

@@ -7,7 +7,9 @@ import java.awt.print.Pageable;
 import java.util.Optional;
 
 @Repository
+//todo YAGNI
 public interface PagingAndSortingRepository {
+
     Optional<Book> findByTitle(String title);
 
     boolean existsByTitleAndAuthorLastname(String title, String authorLastName);

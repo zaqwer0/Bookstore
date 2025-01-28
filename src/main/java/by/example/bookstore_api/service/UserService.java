@@ -52,6 +52,7 @@ public class UserService {
 
     }
 
+    //todo YAGNI
     public UserResponseDto findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .map(userMapper::toUserDto)

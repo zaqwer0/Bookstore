@@ -63,6 +63,7 @@ public class OrderService {
         orderRepository.deleteById(orderId);
     }
 
+    //todo ??
     // there could be impemented more complex update logic
     public void update(UUID orderId, OrderRequestDto orderRequestDto) {
         Order order = orderRepository.findById(orderId)

@@ -38,6 +38,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.findById(bookId));
     }
     @GetMapping
+    //todo where is pagination?
     public ResponseEntity<List<BookResponseDto>> findAll() {
         return ResponseEntity.ok(bookService.findAll());
     }

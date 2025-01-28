@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
+//todo why not impl package
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
@@ -35,6 +36,7 @@ public class AuthorService {
 
     public void save(AuthorRequestDto authorRequestDto) {
         if (authorRepository.existsByLastnameAndName(authorRequestDto.name(), authorRequestDto.lastname())) {
+            //todo custom ex
             throw new IllegalArgumentException(String.format("Author '%s %s' already exists", authorRequestDto.name(), authorRequestDto.lastname()));
         }
         authorRepository.save(authorMapper.toAuthor(authorRequestDto));

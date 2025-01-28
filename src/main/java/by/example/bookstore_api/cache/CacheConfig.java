@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class CacheConfig {
 
     @Bean
+    //todo move to config package
     public CacheManager cacheManager() {
 
         return new ConcurrentMapCacheManager("authorCache");

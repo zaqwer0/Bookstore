@@ -34,6 +34,7 @@ public class BookService {
 
         BookSortedStrategy strategy = bookSortedStrategies.get(sortType);
 
+        //todo bad practice, better to provide default logic
         if (strategy == null) {
             throw new IllegalArgumentException(
                     String.format("Sorting strategy '%s' not found", sortType)
@@ -69,6 +70,8 @@ public class BookService {
         bookRepository.deleteById(bookId);
     }
 
+
+    //todo why do we need this ChatGPT-type comment??
     // there could be implemented logic that will be update for example
     // changing author name or bookstore name
     @Transactional

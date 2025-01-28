@@ -50,6 +50,7 @@ public class BookstoreService {
         bookstoreRepository.save(bookstore);
     }
 
+    //todo YAGNI
     public BookstoreResponseDto findByName(String name) {
         return bookstoreRepository.findByName(name)
                 .map(bookStoreMapper::toBookstoreDto)
