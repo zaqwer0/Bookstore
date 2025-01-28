@@ -14,13 +14,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -32,25 +29,18 @@ public class BookService {
     private final Map<String, BookSortedStrategy> bookSortedStrategies;
     private final BookValidationService bookValidationService;
 
+    private static final String DEFAULT_SORT_STRATEGY = "sortByPrice";
+
     public List<BookResponseDto> findAllSorted(String sortType) {
 
         List<Book> books = bookRepository.findAll();
 
-        BookSortedStrategy strategy = bookSortedStrategies.get(sortType);
+        BookSortedStrategy bookSortedStrategy = bookSortedStrategies.getOrDefault(sortType,
+                bookSortedStrategies.get(DEFAULT_SORT_STRATEGY));
 
-        //todo bad practice, better to provide default logic
-        if (strategy == null) {
-            throw new IllegalArgumentException(
-                    String.format("Sorting strategy '%s' not found", sortType)
-            );
-        }
-        books = strategy.sortBooks(books);
+        log.debug("Using default sort strategy: {}", bookSortedStrategy.getClass().getSimpleName());
 
-        return bookMapper.toBooksResponse(books);
-    }
-
-    public List<Book> findBooksWithSorting(String field) {
-        return bookRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+        return bookMapper.toBooksResponse(bookSortedStrategy.sortBooks(books));
     }
 
     @Cacheable("bookCache")
@@ -81,7 +71,6 @@ public class BookService {
     }
 
 
-    //todo why do we need this ChatGPT-type comment??
     // there could be implemented logic that will be update for example
     // changing author name or bookstore name
     @Transactional
