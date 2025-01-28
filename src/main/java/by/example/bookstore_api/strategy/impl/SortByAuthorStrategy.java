@@ -8,9 +8,8 @@ import java.util.Comparator;
 import java.util.List;
 
 @Component("sortByAuthor")
-//todo move strategy to separate package
-//add Strategy to the name
-public class SortByAuthor implements BookSortedStrategy {
+
+public class SortByAuthorStrategy implements BookSortedStrategy {
     @Override
     public List<Book> sortBooks(List<Book> books) {
         return books.stream()
