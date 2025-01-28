@@ -46,4 +46,9 @@ public class BookstoreController {
         bookstoreService.delete(bookstoreId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<BookstoreResponseDto> findByName (@PathVariable("name") String bookstoreName) {
+        return ResponseEntity.ok(bookstoreService.findByName(bookstoreName));
+    }
 }

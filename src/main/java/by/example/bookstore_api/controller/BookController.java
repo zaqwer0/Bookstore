@@ -64,4 +64,9 @@ public class BookController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/title/{title}")
+    public ResponseEntity<BookResponseDto> findByTitle(@PathVariable("title") String title) {
+        return ResponseEntity.ok(bookService.findByTitle(title));
+    }
+
 }

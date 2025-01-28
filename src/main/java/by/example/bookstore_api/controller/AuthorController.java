@@ -60,4 +60,9 @@ public class AuthorController {
         authorService.deleteById(authorId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/lastname/{name}")
+    public ResponseEntity<AuthorResponseDto> findByLastName(@PathVariable("name") String authorLastName) {
+        return ResponseEntity.ok(authorService.findByLastName(authorLastName));
+    }
 }

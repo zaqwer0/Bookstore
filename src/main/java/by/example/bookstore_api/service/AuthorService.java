@@ -27,7 +27,7 @@ public class AuthorService {
     public AuthorResponseDto findById(UUID authorId) {
         return authorRepository.findById(authorId)
                 .map(authorMapper::toAuthorDto)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Product with id=%s not found", authorId)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Author with id=%s not found", authorId)));
     }
 
     public List<AuthorResponseDto> findAll() {

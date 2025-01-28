@@ -88,7 +88,7 @@ class BookControllerTest {
         );
 
 
-        Mockito.when(bookService.findAll()).thenReturn(books);
+      //  Mockito.when(bookService.findAll()).thenReturn(books);
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
