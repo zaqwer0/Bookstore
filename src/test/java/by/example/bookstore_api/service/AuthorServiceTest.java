@@ -5,6 +5,7 @@ import by.example.bookstore_api.model.dto.request.AuthorRequestDto;
 import by.example.bookstore_api.model.dto.response.AuthorResponseDto;
 import by.example.bookstore_api.model.entity.Author;
 import by.example.bookstore_api.repository.AuthorRepository;
+import by.example.bookstore_api.service.impl.AuthorServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class AuthorServiceTest {
     private AuthorMapper authorMapper;
 
     @InjectMocks
-    private AuthorService authorService;
+    private AuthorServiceImpl authorService;
 
     private UUID authorId;
     private Author author;

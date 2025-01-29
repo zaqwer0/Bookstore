@@ -18,7 +18,6 @@ import java.util.UUID;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    //todo why UUID??
     private UUID id;
 
     @Column(nullable = false)

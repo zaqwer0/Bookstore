@@ -1,4 +1,4 @@
-package validator;
+package by.example.bookstore_api.validator;
 
 import by.example.bookstore_api.model.dto.request.BookRequestDto;
 

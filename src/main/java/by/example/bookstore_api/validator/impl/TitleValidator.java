@@ -1,7 +1,7 @@
-package validator.impl;
+package by.example.bookstore_api.validator.impl;
 
 import by.example.bookstore_api.model.dto.request.BookRequestDto;
-import validator.BookValidator;
+import by.example.bookstore_api.validator.BookValidator;
 import org.springframework.stereotype.Component;
 
 @Component

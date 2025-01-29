@@ -2,7 +2,7 @@ package by.example.bookstore_api.controller;
 
 import by.example.bookstore_api.model.dto.request.BookRequestDto;
 import by.example.bookstore_api.model.dto.response.BookResponseDto;
-import by.example.bookstore_api.service.BookService;
+import by.example.bookstore_api.service.impl.BookServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -30,7 +30,7 @@ class BookControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private BookService bookService;
+    private BookServiceImpl bookService;
 
     @Autowired
     private ObjectMapper objectMapper;

@@ -78,7 +78,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 2 of constructor in by.example.bookstore_api.service.BookService required a single bean, but 3 were found:
+Parameter 2 of constructor in by.example.bookstore_api.service.impl.BookServiceImpl required a single bean, but 3 were found:
 	- sortByAuthor: defined in file [/home/yegor/IdeaProjects/BookStore API/target/classes/by/example/bookstore_api/service/strategy/impl/SortByAuthor.class]
 	- sortByPrice: defined in file [/home/yegor/IdeaProjects/BookStore API/target/classes/by/example/bookstore_api/service/strategy/impl/SortByPrice.class]
 	- sortByYear: defined in file [/home/yegor/IdeaProjects/BookStore API/target/classes/by/example/bookstore_api/service/strategy/impl/SortByYear.class]
@@ -370,8 +370,8 @@ You may need to update both your build tool settings as well as your IDE.
 2025-01-27 11:15:32 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2025-01-27 11:15:32 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
 2025-01-27 11:15:32 [http-nio-8080-exec-1] INFO  b.e.b.controller.AuthorController - got request on getting author with ID: 311e8400-e29b-41d4-a716-446655440000
-2025-01-27 11:15:32 [http-nio-8080-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalArgumentException: Cannot find cache named 'authorCache' for Builder[public by.example.bookstore_api.model.dto.response.AuthorResponseDto by.example.bookstore_api.service.AuthorService.findById(java.util.UUID)] caches=[authorCache] | key='' | keyGenerator='' | cacheManager='' | cacheResolver='' | condition='' | unless='' | sync='false'] with root cause
-java.lang.IllegalArgumentException: Cannot find cache named 'authorCache' for Builder[public by.example.bookstore_api.model.dto.response.AuthorResponseDto by.example.bookstore_api.service.AuthorService.findById(java.util.UUID)] caches=[authorCache] | key='' | keyGenerator='' | cacheManager='' | cacheResolver='' | condition='' | unless='' | sync='false'
+2025-01-27 11:15:32 [http-nio-8080-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalArgumentException: Cannot find cache named 'authorCache' for Builder[public by.example.bookstore_api.model.dto.response.AuthorResponseDto by.example.bookstore_api.service.impl.AuthorServiceImpl.findById(java.util.UUID)] caches=[authorCache] | key='' | keyGenerator='' | cacheManager='' | cacheResolver='' | condition='' | unless='' | sync='false'] with root cause
+java.lang.IllegalArgumentException: Cannot find cache named 'authorCache' for Builder[public by.example.bookstore_api.model.dto.response.AuthorResponseDto by.example.bookstore_api.service.impl.AuthorServiceImpl.findById(java.util.UUID)] caches=[authorCache] | key='' | keyGenerator='' | cacheManager='' | cacheResolver='' | condition='' | unless='' | sync='false'
 	at org.springframework.cache.interceptor.AbstractCacheResolver.resolveCaches(AbstractCacheResolver.java:92)
 	at org.springframework.cache.interceptor.CacheAspectSupport.getCaches(CacheAspectSupport.java:316)
 	at org.springframework.cache.interceptor.CacheAspectSupport$CacheOperationContext.<init>(CacheAspectSupport.java:862)
@@ -381,7 +381,7 @@ java.lang.IllegalArgumentException: Cannot find cache named 'authorCache' for Bu
 	at org.springframework.cache.interceptor.CacheInterceptor.invoke(CacheInterceptor.java:65)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at by.example.bookstore_api.service.AuthorService$$SpringCGLIB$$0.findById(<generated>)
+	at by.example.bookstore_api.service.impl.AuthorServiceImpl$$SpringCGLIB$$0.findById(<generated>)
 	at by.example.bookstore_api.controller.AuthorController.findById(AuthorController.java:28)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)

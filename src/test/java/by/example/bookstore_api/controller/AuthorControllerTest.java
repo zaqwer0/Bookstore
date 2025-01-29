@@ -3,7 +3,7 @@ package by.example.bookstore_api.controller;
 
 import by.example.bookstore_api.model.dto.request.AuthorRequestDto;
 import by.example.bookstore_api.model.dto.response.AuthorResponseDto;
-import by.example.bookstore_api.service.AuthorService;
+import by.example.bookstore_api.service.impl.AuthorServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -28,7 +28,7 @@ class AuthorControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private AuthorService authorService;
+    private AuthorServiceImpl authorService;
 
     @Autowired
     private ObjectMapper objectMapper;
