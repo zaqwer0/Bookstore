@@ -1,5 +1,6 @@
 package by.example.bookstore_api.service.impl;
 
+import by.example.bookstore_api.config.exceptionHandler.CustomNotFoundException;
 import by.example.bookstore_api.mapper.AuthorMapper;
 import by.example.bookstore_api.model.dto.request.AuthorRequestDto;
 import by.example.bookstore_api.model.dto.response.AuthorResponseDto;
@@ -36,8 +37,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     public void save(AuthorRequestDto authorRequestDto) {
         if (authorRepository.existsByLastnameAndName(authorRequestDto.name(), authorRequestDto.lastname())) {
-            //todo custom ex
-            throw new IllegalArgumentException(String.format("Author '%s %s' already exists", authorRequestDto.name(), authorRequestDto.lastname()));
+            // CUSTOM exception example (висело ту ду тут на кастом экпшн)
+            throw new CustomNotFoundException(String.format("Author '%s %s' already exists", authorRequestDto.name(), authorRequestDto.lastname()));
         }
         authorRepository.save(authorMapper.toAuthor(authorRequestDto));
     }
