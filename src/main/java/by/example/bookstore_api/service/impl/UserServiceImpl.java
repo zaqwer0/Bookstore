@@ -1,7 +1,6 @@
 package by.example.bookstore_api.service.impl;
 
-import by.example.bookstore_api.config.exceptionHandler.CustomNotFoundException;
-import by.example.bookstore_api.config.exceptionHandler.UserExists;
+import by.example.bookstore_api.exception.UserExists;
 import by.example.bookstore_api.mapper.UserMapper;
 import by.example.bookstore_api.model.dto.request.UserRequestDto;
 import by.example.bookstore_api.model.dto.response.UserResponseDto;
@@ -9,11 +8,10 @@ import by.example.bookstore_api.model.entity.User;
 import by.example.bookstore_api.repository.UserRepository;
 import by.example.bookstore_api.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service

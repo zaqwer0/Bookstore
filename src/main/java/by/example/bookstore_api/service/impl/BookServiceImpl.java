@@ -10,6 +10,9 @@ import by.example.bookstore_api.strategy.BookSortedStrategy;
 import by.example.bookstore_api.validator.BookValidationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,9 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-
-import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -73,8 +73,6 @@ public class BookServiceImpl implements BookService {
     }
 
 
-    // there could be implemented logic that will be update for example
-    // changing author name or bookstore name
     @Transactional
     public void update(UUID bookId, BookRequestDto bookRequestDto) {
 

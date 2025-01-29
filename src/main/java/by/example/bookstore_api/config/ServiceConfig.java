@@ -1,4 +1,4 @@
-package by.example.bookstore_api.config.cache;
+package by.example.bookstore_api.config;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableCaching
-public class CacheConfig {
+public class ServiceConfig {
 
     @Bean
     public CacheManager cacheManager() {

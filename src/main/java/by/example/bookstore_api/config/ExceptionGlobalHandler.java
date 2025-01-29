@@ -1,5 +1,6 @@
-package by.example.bookstore_api.config.exceptionHandler;
+package by.example.bookstore_api.config;
 
+import by.example.bookstore_api.exception.AuthorExists;
 import by.example.bookstore_api.model.dto.exception.ExceptionResponseDto;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
