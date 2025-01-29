@@ -1,6 +1,7 @@
 package by.example.bookstore_api.service.impl;
 
 import by.example.bookstore_api.config.exceptionHandler.CustomNotFoundException;
+import by.example.bookstore_api.config.exceptionHandler.UserExists;
 import by.example.bookstore_api.mapper.UserMapper;
 import by.example.bookstore_api.model.dto.request.UserRequestDto;
 import by.example.bookstore_api.model.dto.response.UserResponseDto;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     public void save(UserRequestDto userRequestDto) {
         if (userRepository.existsByEmail(userRequestDto.email())) {
-            throw new CustomNotFoundException(String.format("Username %s already exists", userRequestDto.username()));
+            throw new UserExists(String.format("Username %s already exists", userRequestDto.username()));
         }
         userRepository.save(userMapper.toUser(userRequestDto));
     }

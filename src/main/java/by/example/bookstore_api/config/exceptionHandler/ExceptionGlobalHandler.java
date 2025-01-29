@@ -17,9 +17,9 @@ public class ExceptionGlobalHandler {
     private static final String ERROR_LOG_FORMAT = "Error: [message='{}'], [URI='{}']";
 
 
-    @ExceptionHandler(CustomNotFoundException.class)
+    @ExceptionHandler(AuthorExists.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionResponseDto handleNotFoundException(HttpServletRequest request, CustomNotFoundException exception) {
+    public ExceptionResponseDto handleAuthorExistsException(HttpServletRequest request, AuthorExists exception) {
 
         log.warn(ERROR_LOG_FORMAT, exception.getMessage(), request.getRequestURL());
         return buildResponse(exception, HttpStatus.NOT_FOUND, request);
