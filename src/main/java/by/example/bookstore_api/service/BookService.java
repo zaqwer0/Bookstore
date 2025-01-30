@@ -11,7 +11,7 @@ public interface BookService {
 
     List<BookResponseDto> findAllSorted(String sortType);
 
-    Page<BookResponseDto> findAll(int page, int size);
+    Page<BookResponseDto> findAll(int page, int size, String filter);
 
     BookResponseDto findById(UUID id);
 

@@ -16,5 +16,7 @@ public interface BookstoreRepository extends CrudRepository<Bookstore, UUID> {
 
     Optional<Bookstore> findByName(String name);
 
+    List<Bookstore> findByNameContainingIgnoreCase(String username);
+
     boolean existsByName(String name);
 }

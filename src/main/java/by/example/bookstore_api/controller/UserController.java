@@ -22,11 +22,13 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    @GetMapping
-    public ResponseEntity<List<UserResponseDto>> findAll(
-    ) {
-        return ResponseEntity.ok(userService.findAll());
+  @GetMapping
+  public ResponseEntity<List<UserResponseDto>> findAll(
+      @RequestParam(value = "filter", required = false) String filter) {
+    List<UserResponseDto> users = userService.findAll(filter);
+    return ResponseEntity.ok(users);
     }
+    
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody UserRequestDto userRequestDto) {
@@ -44,10 +46,5 @@ public class UserController {
     public ResponseEntity<Void> delete(@PathVariable("id") UUID id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/username/{username}")
-    public ResponseEntity<UserResponseDto> findByUsername(@PathVariable("username") String username) {
-        return ResponseEntity.ok(userService.findByUsername(username));
     }
 }

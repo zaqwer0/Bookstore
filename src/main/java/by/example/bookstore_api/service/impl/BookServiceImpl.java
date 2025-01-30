@@ -52,11 +52,20 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Book with id %s not found", bookId)));
     }
 
-    public Page<BookResponseDto> findAll(int page, int size) {
+    public Page<BookResponseDto> findAll(int page, int size, String filter) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Book> books = bookRepository.findAll(pageable);
+        Page<Book> books;
+
+        if (filter != null && !filter.isEmpty()) {
+
+            books = bookRepository.findAllByTitleContaining(filter, (java.awt.print.Pageable) pageable);
+        } else {
+            books = bookRepository.findAll(pageable);
+        }
+
         return books.map(bookMapper::toBookDto);
     }
+
 
     public void save(BookRequestDto bookRequestDto) {
 

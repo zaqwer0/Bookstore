@@ -19,14 +19,21 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+
     public UserResponseDto findById(UUID userId) {
         return userRepository.findById(userId)
                 .map(userMapper::toUserDto)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with id %s not found", userId)));
     }
 
-    public List<UserResponseDto> findAll() {
-        return userMapper.toUserResponse(userRepository.findAll());
+  public List<UserResponseDto> findAll(String filter) {
+    List<User> users;
+    if (filter != null && !filter.isEmpty()) {
+      users = userRepository.findByUsernameContainingIgnoreCase(filter);
+    } else {
+      users = userRepository.findAll();
+    }
+    return userMapper.toUserResponse(users);
     }
 
     public void save(UserRequestDto userRequestDto) {
@@ -51,11 +58,5 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userRequestDto.email());
         userRepository.save(user);
 
-    }
-
-    public UserResponseDto findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .map(userMapper::toUserDto)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("User with name %s not found", username)));
     }
 }

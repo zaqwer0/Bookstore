@@ -30,9 +30,14 @@ public class BookstoreServiceImpl implements BookstoreService {
                     String.format("Bookstore with id %s not found", bookstoreId)));
     }
 
-  public List<BookstoreResponseDto> findAll() {
-
-    return bookStoreMapper.toBookstoresResponse(bookstoreRepository.findAll());
+  public List<BookstoreResponseDto> findAll(String filter) {
+        List<Bookstore> bookstores;
+        if (filter != null && !filter.isEmpty()) {
+            bookstores = bookstoreRepository.findByNameContainingIgnoreCase(filter);
+        } else {
+            bookstores = bookstoreRepository.findAll();
+        }
+        return bookStoreMapper.toBookstoresResponse(bookstores);
     }
 
     public void save(BookstoreRequestDto bookstoreRequestDto) {
@@ -55,9 +60,4 @@ public class BookstoreServiceImpl implements BookstoreService {
         bookstoreRepository.save(bookstore);
     }
 
-    public BookstoreResponseDto findByName(String name) {
-        return bookstoreRepository.findByName(name)
-                .map(bookStoreMapper::toBookstoreDto)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Bookstore with name %s not found", name)));
-    }
 }

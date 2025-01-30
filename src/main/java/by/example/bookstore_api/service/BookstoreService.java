@@ -9,7 +9,7 @@ public interface BookstoreService {
 
     BookstoreResponseDto findById(UUID id);
 
-  List<BookstoreResponseDto> findAll();
+  List<BookstoreResponseDto> findAll(String filter);
 
     void save(BookstoreRequestDto bookstoreRequestDto);
 
@@ -17,5 +17,4 @@ public interface BookstoreService {
 
     void update(UUID bookstoreId, BookstoreRequestDto bookstoreRequestDto);
 
-    BookstoreResponseDto findByName(String name);
 }

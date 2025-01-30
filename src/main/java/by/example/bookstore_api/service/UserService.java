@@ -10,7 +10,7 @@ public interface UserService {
 
     UserResponseDto findById(UUID userId);
 
-    List<UserResponseDto> findAll();
+    List<UserResponseDto> findAll(String filter);
 
     void save(UserRequestDto userRequestDto);
 
@@ -18,5 +18,5 @@ public interface UserService {
 
     void update(UUID userId, UserRequestDto userRequestDto);
 
-    UserResponseDto findByUsername(String username);
 }
+

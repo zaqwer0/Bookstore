@@ -38,9 +38,12 @@ public class BookController {
         return ResponseEntity.ok(bookService.findById(bookId));
     }
 
-    @GetMapping
-    public ResponseEntity<List<BookResponseDto>> findAll(int page, int size) {
-        Page<BookResponseDto> bookResponseDtos = bookService.findAll(page, size);
+  @GetMapping
+  public ResponseEntity<List<BookResponseDto>> findAll(
+      @RequestParam int page,
+      @RequestParam int size,
+      @RequestParam(required = false) String filter) {
+    Page<BookResponseDto> bookResponseDtos = bookService.findAll(page, size, filter);
         return ResponseEntity.ok(bookResponseDtos.getContent());
     }
 

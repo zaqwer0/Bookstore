@@ -23,9 +23,11 @@ public class BookstoreController {
     }
 
   @GetMapping
-  public ResponseEntity<List<BookstoreResponseDto>> findAll() {
-        return ResponseEntity.ok(bookstoreService.findAll());
-    }
+  public ResponseEntity<List<BookstoreResponseDto>> findAll(
+      @RequestParam(value = "filter", required = false) String filter) {
+    List<BookstoreResponseDto> bookstores = bookstoreService.findAll(filter);
+    return ResponseEntity.ok(bookstores);
+  }
 
   @PostMapping
   public ResponseEntity<Void> save(@RequestBody BookstoreRequestDto bookstoreRequestDto) {
@@ -44,11 +46,5 @@ public class BookstoreController {
   public ResponseEntity<Void> delete(@PathVariable("id") UUID bookstoreId) {
         bookstoreService.delete(bookstoreId);
         return ResponseEntity.noContent().build();
-    }
-
-  @GetMapping("/name/{name}")
-  public ResponseEntity<BookstoreResponseDto> findByName(
-      @PathVariable("name") String bookstoreName) {
-        return ResponseEntity.ok(bookstoreService.findByName(bookstoreName));
     }
 }
