@@ -1,13 +1,12 @@
 package by.example.bookstore_api.model.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Builder
@@ -18,7 +17,6 @@ import java.util.UUID;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    //todo why UUID??
     private UUID id;
 
     @Column(nullable = false)
@@ -27,6 +25,6 @@ public class Author {
     @Column(nullable = false)
     private String lastname;
 
-    @OneToMany(mappedBy = "author",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Book> books;
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Book> books;
 }

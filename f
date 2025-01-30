@@ -9,3 +9,16 @@ VALUES ('333e8400-e29b-41d4-a716-006655440000', 'Book One', '311e8400-e29b-41d4-
         '111e8400-e29b-41d4-a716-446655440003'),
        ('333e8400-e29b-41d4-a716-446655440004', 'Book Five', '311e8400-e29b-41d4-a716-446655440004', 12.99, 2022,
         '111e8400-e29b-41d4-a716-446655440004');
+
+
+ List<Book> books = bookRepository.findAll();
+
+        BookSortedStrategy bookSortedStrategy = Optional.ofNullable(bookSortedStrategies.get(sortType))
+                .orElse((unsorted) -> unsorted.stream()
+                        .sorted(Comparator.comparing(Book::getTitle))
+                        .toList()
+                );
+
+        books = bookSortedStrategy.sortBooks(books);
+
+        return bookMapper.toBooksResponse(books);

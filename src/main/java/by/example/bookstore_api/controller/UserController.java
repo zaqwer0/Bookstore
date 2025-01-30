@@ -3,13 +3,12 @@ package by.example.bookstore_api.controller;
 import by.example.bookstore_api.model.dto.request.UserRequestDto;
 import by.example.bookstore_api.model.dto.response.UserResponseDto;
 import by.example.bookstore_api.service.UserService;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,10 +22,13 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    @GetMapping
-    public ResponseEntity<List<UserResponseDto>> findAll() {
-        return ResponseEntity.ok(userService.findAll());
+  @GetMapping
+  public ResponseEntity<List<UserResponseDto>> findAll(
+      @RequestParam(value = "filter", required = false) String filter) {
+    List<UserResponseDto> users = userService.findAll(filter);
+    return ResponseEntity.ok(users);
     }
+    
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody UserRequestDto userRequestDto) {

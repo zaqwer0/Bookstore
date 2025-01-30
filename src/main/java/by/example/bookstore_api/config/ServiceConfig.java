@@ -1,4 +1,4 @@
-package by.example.bookstore_api.cache;
+package by.example.bookstore_api.config;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -8,10 +8,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableCaching
-public class CacheConfig {
+public class ServiceConfig {
 
     @Bean
-    //todo move to config package
     public CacheManager cacheManager() {
 
         return new ConcurrentMapCacheManager("authorCache");

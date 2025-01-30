@@ -3,14 +3,14 @@ package by.example.bookstore_api.controller;
 import by.example.bookstore_api.model.dto.request.BookRequestDto;
 import by.example.bookstore_api.model.dto.response.BookResponseDto;
 import by.example.bookstore_api.service.BookService;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -20,27 +20,20 @@ public class BookController {
 
     private final BookService bookService;
 
-
-    @GetMapping("/sorted")
-    public ResponseEntity<List<BookResponseDto>> findAllSorted(@RequestParam String sortBy) {
-        log.info("Received sortBy parameter: {}", sortBy);
-        try {
-            List<BookResponseDto> sortedBooks = bookService.findAllSorted(sortBy);
-            return ResponseEntity.ok(sortedBooks);
-        } catch (IllegalArgumentException e) {
-            log.error("Error during sorting: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
-
     @GetMapping("{id}")
     public ResponseEntity<BookResponseDto> findById(@PathVariable("id") UUID bookId) {
         return ResponseEntity.ok(bookService.findById(bookId));
     }
-    @GetMapping
-    //todo where is pagination?
-    public ResponseEntity<List<BookResponseDto>> findAll() {
-        return ResponseEntity.ok(bookService.findAll());
+
+  @GetMapping
+  public ResponseEntity<List<BookResponseDto>> findAll(
+      @RequestParam int page,
+      @RequestParam int size,
+      @RequestParam(required = false) String filter,
+      @RequestParam(required = false) String sortBy
+  ) {
+    Page<BookResponseDto> bookResponseDtos = bookService.findAll(page, size, filter, sortBy);
+        return ResponseEntity.ok(bookResponseDtos.getContent());
     }
 
     @PostMapping
