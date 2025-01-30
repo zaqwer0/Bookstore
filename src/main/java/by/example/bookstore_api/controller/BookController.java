@@ -20,19 +20,6 @@ public class BookController {
 
     private final BookService bookService;
 
-
-    @GetMapping("/sorted")
-    public ResponseEntity<List<BookResponseDto>> findAllSorted(@RequestParam String sortBy) {
-        log.info("Received sortBy parameter: {}", sortBy);
-        try {
-            List<BookResponseDto> sortedBooks = bookService.findAllSorted(sortBy);
-            return ResponseEntity.ok(sortedBooks);
-        } catch (IllegalArgumentException e) {
-            log.error("Error during sorting: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
-
     @GetMapping("{id}")
     public ResponseEntity<BookResponseDto> findById(@PathVariable("id") UUID bookId) {
         return ResponseEntity.ok(bookService.findById(bookId));
@@ -42,8 +29,10 @@ public class BookController {
   public ResponseEntity<List<BookResponseDto>> findAll(
       @RequestParam int page,
       @RequestParam int size,
-      @RequestParam(required = false) String filter) {
-    Page<BookResponseDto> bookResponseDtos = bookService.findAll(page, size, filter);
+      @RequestParam(required = false) String filter,
+      @RequestParam(required = false) String sortBy
+  ) {
+    Page<BookResponseDto> bookResponseDtos = bookService.findAll(page, size, filter, sortBy);
         return ResponseEntity.ok(bookResponseDtos.getContent());
     }
 
@@ -63,11 +52,6 @@ public class BookController {
     public ResponseEntity<Void> deleteById(@PathVariable("id") UUID bookId) {
         bookService.delete(bookId);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/title/{title}")
-    public ResponseEntity<BookResponseDto> findByTitle(@PathVariable("title") String title) {
-        return ResponseEntity.ok(bookService.findByTitle(title));
     }
 
 }

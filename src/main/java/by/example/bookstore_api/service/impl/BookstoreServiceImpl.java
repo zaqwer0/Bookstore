@@ -1,12 +1,12 @@
 package by.example.bookstore_api.service.impl;
 
+import by.example.bookstore_api.exception.BookstoreException;
 import by.example.bookstore_api.mapper.BookStoreMapper;
 import by.example.bookstore_api.model.dto.request.BookstoreRequestDto;
 import by.example.bookstore_api.model.dto.response.BookstoreResponseDto;
 import by.example.bookstore_api.model.entity.Bookstore;
 import by.example.bookstore_api.repository.BookstoreRepository;
 import by.example.bookstore_api.service.BookstoreService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
@@ -26,7 +26,7 @@ public class BookstoreServiceImpl implements BookstoreService {
         .map(bookStoreMapper::toBookstoreDto)
         .orElseThrow(
             () ->
-                new EntityNotFoundException(
+                new BookstoreException(
                     String.format("Bookstore with id %s not found", bookstoreId)));
     }
 
@@ -42,7 +42,8 @@ public class BookstoreServiceImpl implements BookstoreService {
 
     public void save(BookstoreRequestDto bookstoreRequestDto) {
         if (bookstoreRepository.existsByName(bookstoreRequestDto.name())) {
-            throw new IllegalArgumentException("Bookstore with name " + bookstoreRequestDto.name() + " already exists");
+      throw new BookstoreException(
+          "Bookstore with name " + bookstoreRequestDto.name() + " already exists");
         }
         bookstoreRepository.save(bookStoreMapper.toBookstore(bookstoreRequestDto));
     }
@@ -53,8 +54,11 @@ public class BookstoreServiceImpl implements BookstoreService {
 
     @Transactional
     public void update(UUID bookstoreId, BookstoreRequestDto bookstoreRequestDto) {
-        Bookstore bookstore = bookstoreRepository.findById(bookstoreId)
-                .orElseThrow(() -> new EntityNotFoundException("Bookstore with id " + bookstoreId + " not found"));
+    Bookstore bookstore =
+        bookstoreRepository
+            .findById(bookstoreId)
+            .orElseThrow(
+                () -> new BookstoreException("Bookstore with id " + bookstoreId + " not found"));
 
         bookstore.setName(bookstoreRequestDto.name());
         bookstoreRepository.save(bookstore);

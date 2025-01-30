@@ -4,14 +4,11 @@ import by.example.bookstore_api.model.dto.request.BookRequestDto;
 import by.example.bookstore_api.model.dto.response.BookResponseDto;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface BookService {
 
-    List<BookResponseDto> findAllSorted(String sortType);
-
-    Page<BookResponseDto> findAll(int page, int size, String filter);
+    Page<BookResponseDto> findAll(int page, int size, String filter, String sort);
 
     BookResponseDto findById(UUID id);
 
@@ -21,5 +18,4 @@ public interface BookService {
 
     void delete(UUID id);
 
-    BookResponseDto findByTitle(String title);
 }
