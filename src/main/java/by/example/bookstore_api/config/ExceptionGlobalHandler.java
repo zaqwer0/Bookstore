@@ -1,6 +1,7 @@
 package by.example.bookstore_api.config;
 
 import by.example.bookstore_api.exception.AuthorExists;
+import by.example.bookstore_api.exception.BookstoreException;
 import by.example.bookstore_api.model.dto.exception.ExceptionResponseDto;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,13 +18,13 @@ public class ExceptionGlobalHandler {
     private static final String ERROR_LOGGING_USING_URI_URL = "An error occurred: message='{}', URL='{}'";
     private static final String ERROR_LOG_FORMAT = "Error: [message='{}'], [URI='{}']";
 
-
-    @ExceptionHandler(AuthorExists.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionResponseDto handleAuthorExistsException(HttpServletRequest request, AuthorExists exception) {
+  @ExceptionHandler(BookstoreException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ExceptionResponseDto handleAuthorExistsException(
+      HttpServletRequest request, AuthorExists exception) {
 
         log.warn(ERROR_LOG_FORMAT, exception.getMessage(), request.getRequestURL());
-        return buildResponse(exception, HttpStatus.NOT_FOUND, request);
+    return buildResponse(exception, HttpStatus.BAD_REQUEST, request);
     }
 
 
