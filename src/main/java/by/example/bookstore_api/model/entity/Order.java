@@ -1,6 +1,6 @@
 package by.example.bookstore_api.model.entity;
 
-import by.example.bookstore_api.model.enums.OrderStatus;
+import by.example.bookstore_api.model.enumeration.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -6,7 +6,6 @@ import by.example.bookstore_api.model.dto.response.OrderResponseDto;
 import by.example.bookstore_api.model.entity.Book;
 import by.example.bookstore_api.model.entity.Order;
 import by.example.bookstore_api.model.entity.User;
-import by.example.bookstore_api.model.enums.OrderStatus;
 import by.example.bookstore_api.repository.BookRepository;
 import by.example.bookstore_api.repository.OrderRepository;
 import by.example.bookstore_api.repository.UserRepository;
@@ -50,7 +49,6 @@ public class OrderServiceImpl implements OrderService {
                 .book(book)
                 .quantity(orderRequestDto.quantity())
                 .orderDate(LocalDateTime.now())
-                .orderStatus(OrderStatus.PACKING)
                 .build();
 
         Order savedOrder = orderRepository.save(order);
@@ -62,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(orderId);
     }
 
-    //there could be impemented more complex update logic
+
     public void update(UUID orderId, OrderRequestDto orderRequestDto) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Order with id=%s not found", orderId)));
