@@ -1,7 +1,9 @@
 package by.example.bookstore_api.model.dto.response;
 
-import java.util.UUID;
+import lombok.Builder;
 
+import java.util.UUID;
+@Builder
 public record BookstoreResponseDto(
         UUID id,
         String name

@@ -18,13 +18,14 @@ import java.util.UUID;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    //todo why UUID??
     private UUID id;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    private String lastName;
+    private String lastname;
 
     @OneToMany(mappedBy = "author",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Book> books;
