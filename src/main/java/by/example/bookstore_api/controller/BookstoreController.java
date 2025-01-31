@@ -5,6 +5,8 @@ import by.example.bookstore_api.model.dto.response.BookstoreResponseDto;
 import by.example.bookstore_api.service.BookstoreService;
 import java.util.List;
 import java.util.UUID;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("bookstores")
 @RequiredArgsConstructor
+@Tag(name = "BookstoreController", description = "CRUDs")
 public class BookstoreController {
 
     private final BookstoreService bookstoreService;
