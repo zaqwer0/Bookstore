@@ -6,10 +6,12 @@ import by.example.bookstore_api.model.dto.response.OrderResponseDto;
 import by.example.bookstore_api.model.entity.Book;
 import by.example.bookstore_api.model.entity.Order;
 import by.example.bookstore_api.model.entity.User;
+import by.example.bookstore_api.model.enumeration.OrderStatus;
 import by.example.bookstore_api.repository.BookRepository;
 import by.example.bookstore_api.repository.OrderRepository;
 import by.example.bookstore_api.repository.UserRepository;
 import by.example.bookstore_api.service.OrderService;
+import by.example.bookstore_api.kafka.KafkaProducerService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
+    private final KafkaProducerService kafkaProducerService;
 
     public OrderResponseDto findById(UUID orderId) {
         return orderRepository.findById(orderId)
@@ -49,9 +52,12 @@ public class OrderServiceImpl implements OrderService {
                 .book(book)
                 .quantity(orderRequestDto.quantity())
                 .orderDate(LocalDateTime.now())
+                .orderStatus(OrderStatus.PROCESSING)
                 .build();
 
         Order savedOrder = orderRepository.save(order);
+
+        kafkaProducerService.sendInventoryReq(savedOrder);
 
         return orderMapper.toOrderResponseDto(savedOrder);
     }

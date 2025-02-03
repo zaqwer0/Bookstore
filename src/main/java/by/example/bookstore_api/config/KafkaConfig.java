@@ -1,5 +1,6 @@
 package by.example.bookstore_api.config;
 
+import by.example.bookstore_api.kafka.OrderEventDto;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ser.std.StringSerializer;
@@ -26,7 +27,7 @@ public class KafkaConfig {
     private String groupId;
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<String, OrderEventDto> producerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -35,12 +36,12 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
+    public KafkaTemplate<String, OrderEventDto> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    @Bean
-    public ConsumerFactory<String, String> consumerFactory() {
+  @Bean
+  public ConsumerFactory<String, OrderEventDto> consumerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -48,8 +49,9 @@ public class KafkaConfig {
         config.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         return new DefaultKafkaConsumerFactory<>(config);
     }
-    
-    public ConcurrentMessageListenerContainer<String, String> kafkaListenerContainerFactory() {
+
+  @Bean
+  public ConcurrentMessageListenerContainer<String, OrderEventDto> kafkaListenerContainerFactory() {
         ContainerProperties containerProperties = new ContainerProperties("invetoryResp");
         return new ConcurrentMessageListenerContainer<>(consumerFactory(), containerProperties);
     }
