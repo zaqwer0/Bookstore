@@ -41,4 +41,6 @@ public class Order {
     @Column(nullable = false)
     private OrderStatus orderStatus;
 
+//    @Column(nullable = false)
+//    private UUID kafkaEventId;
 }

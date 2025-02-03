@@ -11,6 +11,4 @@ import org.springframework.stereotype.Repository;
 public interface OrderRepository extends CrudRepository<Order, UUID> {
     @NonNull
     List<Order> findAll();
-
-
 }

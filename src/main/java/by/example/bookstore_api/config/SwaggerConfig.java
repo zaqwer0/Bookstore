@@ -14,6 +14,6 @@ public class SwaggerConfig {
             new Info()
                 .title("Book Store API")
                 .version("1.0")
-                .description("This is a book store API"));
+                .description("This is a book store API made by Yegor"));
   }
 }
