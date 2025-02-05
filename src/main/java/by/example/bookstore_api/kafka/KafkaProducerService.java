@@ -11,10 +11,9 @@ public class KafkaProducerService {
     private final KafkaTemplate<String, OrderEventDto> kafkaTemplate;
 
     private String orderStatusTopic = "order-status";
-    private KafkaTemplate<String, String> orderStatusKafkaTemplate;
+    private final KafkaTemplate<String, String> orderStatusKafkaTemplate;
 
     public void sendInventoryReq(Order order) {
-        //String message = String.format("Requested book: %s, orderId", order.getBook().getId(), order.getId());
         kafkaTemplate.send("inventory-req", new OrderEventDto());
     }
 

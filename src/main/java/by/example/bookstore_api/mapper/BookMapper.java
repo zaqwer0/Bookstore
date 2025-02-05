@@ -5,6 +5,7 @@ import by.example.bookstore_api.model.dto.request.BookRequestDto;
 import by.example.bookstore_api.model.dto.response.BookResponseDto;
 import by.example.bookstore_api.model.entity.Book;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface BookMapper {
 
     List<BookResponseDto> toBooksResponse(List<Book> bookDtos);
 
-
+    @Mapping(source = "author.name", target = "authorName")
+    @Mapping(source = "author.lastname", target = "authorLastName")
+    @Mapping(source = "bookstore.name", target = "bookstoreName")
     BookResponseDto toBookDto(Book book);
 }
