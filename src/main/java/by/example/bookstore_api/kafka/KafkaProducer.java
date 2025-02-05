@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class KafkaProducer {
-  private final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
+  private final Logger logger = LoggerFactory.getLogger(KafkaProducer.class);
 
-  private KafkaTemplate<String, String> kafkaTemplate;
+  private final KafkaTemplate<String, String> kafkaTemplate;
 
   public void sendMessage(String message) {
-    LOGGER.info(String.format("Sending message: %s", message));
+    logger.info(String.format("Sending message: %s", message));
     kafkaTemplate.send("bookstore", message);
   }
 }

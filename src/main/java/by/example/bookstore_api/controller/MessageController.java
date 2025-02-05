@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MessageController {
 
-  private KafkaProducer kafkaProducer;
+  private final KafkaProducer kafkaProducer;
 
   @GetMapping("publish")
   public ResponseEntity<String> sendMessage(@RequestParam String message) {
