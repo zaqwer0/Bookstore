@@ -10,15 +10,21 @@ import org.springframework.stereotype.Service;
 public class KafkaProducerService {
     private final KafkaTemplate<String, OrderEventDto> kafkaTemplate;
 
-    private String orderStatusTopic = "order-status";
+
     private final KafkaTemplate<String, String> orderStatusKafkaTemplate;
 
     public void sendInventoryReq(Order order) {
-        kafkaTemplate.send("inventory-req", new OrderEventDto());
+    OrderEventDto orderEventDto =
+        OrderEventDto.builder()
+            .orderId(order.getId())
+            .orderStatus(order.getOrderStatus())
+            .userId(order.getId())
+            .bookId(order.getId())
+            .quantity(order.getQuantity())
+            .build();
+    kafkaTemplate.send("bookstore", orderEventDto);
     }
 
-    public void sendInventoryResponse(String message) {
-        kafkaTemplate.send("books", new OrderEventDto());
-    }
+
 }
 
