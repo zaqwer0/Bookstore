@@ -11,7 +11,6 @@ public record BookResponseDto(
         String authorName,
         String authorLastName,
         double price,
-        Integer publishedYear,
-        String bookstoreName
+        Integer publishedYear
 ) {
 }
