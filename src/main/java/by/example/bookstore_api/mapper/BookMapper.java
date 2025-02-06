@@ -20,6 +20,6 @@ public interface BookMapper {
 
     @Mapping(source = "author.name", target = "authorName")
     @Mapping(source = "author.lastname", target = "authorLastName")
-    @Mapping(source = "bookstore.name", target = "bookstoreName")
+    //@Mapping(source = "myBookstore.name", target = "bookstoreName")
     BookResponseDto toBookDto(Book book);
 }

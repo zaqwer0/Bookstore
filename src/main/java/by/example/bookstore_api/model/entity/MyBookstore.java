@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,15 +13,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "bookstores")
-public class Bookstore {
+@Table(name = "mybookstore")
+public class MyBookstore {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bookstore")
-    private List<Book> books;
+    @Column(nullable = false)
+    private int quantity;
 }

@@ -32,7 +32,4 @@ public class Book {
     @Column(nullable = false)
     private Integer publishedYear;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bookstore_id", nullable = false)
-    private Bookstore bookstore;
 }
