@@ -15,36 +15,36 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("users")
 public class UserController {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @GetMapping("{id}")
-    public ResponseEntity<UserResponseDto> findById(@PathVariable("id") UUID id) {
-        return ResponseEntity.ok(userService.findById(id));
-    }
+  @GetMapping("{id}")
+  public ResponseEntity<UserResponseDto> findById(@PathVariable("id") UUID id) {
+    return ResponseEntity.ok(userService.findById(id));
+  }
 
   @GetMapping
   public ResponseEntity<List<UserResponseDto>> findAll(
       @RequestParam(value = "filter", required = false) String filter) {
     List<UserResponseDto> users = userService.findAll(filter);
     return ResponseEntity.ok(users);
-    }
-    
+  }
 
-    @PostMapping
-    public ResponseEntity<Void> save(@RequestBody UserRequestDto userRequestDto) {
-        userService.save(userRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+  @PostMapping
+  public ResponseEntity<Void> save(@RequestBody UserRequestDto userRequestDto) {
+    userService.save(userRequestDto);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable("id") UUID id, @RequestBody UserRequestDto userRequestDto) {
-        userService.update(id, userRequestDto);
-        return ResponseEntity.ok().build();
-    }
+  @PutMapping("{id}")
+  public ResponseEntity<Void> update(
+      @PathVariable("id") UUID id, @RequestBody UserRequestDto userRequestDto) {
+    userService.update(id, userRequestDto);
+    return ResponseEntity.ok().build();
+  }
 
-    @RequestMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") UUID id) {
-        userService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
+  @RequestMapping("{id}")
+  public ResponseEntity<Void> delete(@PathVariable("id") UUID id) {
+    userService.delete(id);
+    return ResponseEntity.noContent().build();
+  }
 }

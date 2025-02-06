@@ -1,1 +1,2 @@
-ALTER TABLE books DROP COLUMN bookstore_id;
+ALTER TABLE books
+    DROP COLUMN bookstore_id;

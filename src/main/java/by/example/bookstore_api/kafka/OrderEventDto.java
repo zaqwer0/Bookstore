@@ -12,9 +12,9 @@ import java.util.UUID;
 @Getter
 @Setter
 public class OrderEventDto {
-    private UUID orderId;
-    private OrderStatus orderStatus;
-    private UUID userId;
-    private UUID bookId;
-    public long quantity;
+  public long quantity;
+  private UUID orderId;
+  private OrderStatus orderStatus;
+  private UUID userId;
+  private UUID bookId;
 }

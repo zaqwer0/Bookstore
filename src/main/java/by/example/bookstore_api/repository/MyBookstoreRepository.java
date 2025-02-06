@@ -9,8 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MyBookstoreRepository extends JpaRepository<MyBookstore, UUID> {
 
-
-    Optional<MyBookstore> findByBookId(UUID bookId);
-
-
+  Optional<MyBookstore> findByBookId(UUID bookId);
 }

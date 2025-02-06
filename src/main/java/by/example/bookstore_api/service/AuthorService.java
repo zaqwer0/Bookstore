@@ -8,15 +8,15 @@ import java.util.UUID;
 
 public interface AuthorService {
 
-    AuthorResponseDto findById(UUID authorId);
+  AuthorResponseDto findById(UUID authorId);
 
-    List<AuthorResponseDto> findAll();
+  List<AuthorResponseDto> findAll();
 
-    void save(AuthorRequestDto authorRequestDto);
+  void save(AuthorRequestDto authorRequestDto);
 
-    void deleteById(UUID authorId);
+  void deleteById(UUID authorId);
 
-    void update(UUID authorId, AuthorRequestDto authorRequestDto);
+  void update(UUID authorId, AuthorRequestDto authorRequestDto);
 
-    AuthorResponseDto findByLastName(String lastName);
+  AuthorResponseDto findByLastName(String lastName);
 }

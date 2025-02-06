@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order, UUID> {
-    @NonNull
-    List<Order> findAll();
+  @NonNull
+  List<Order> findAll();
 }

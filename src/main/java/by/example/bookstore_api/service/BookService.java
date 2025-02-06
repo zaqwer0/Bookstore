@@ -8,14 +8,13 @@ import java.util.UUID;
 
 public interface BookService {
 
-    Page<BookResponseDto> findAll(int page, int size, String filter, String sort);
+  Page<BookResponseDto> findAll(int page, int size, String filter, String sort);
 
-    BookResponseDto findById(UUID id);
+  BookResponseDto findById(UUID id);
 
-    void save(BookRequestDto bookRequestDto);
+  void save(BookRequestDto bookRequestDto);
 
-    void update(UUID id, BookRequestDto bookRequestDto);
+  void update(UUID id, BookRequestDto bookRequestDto);
 
-    void delete(UUID id);
-
+  void delete(UUID id);
 }

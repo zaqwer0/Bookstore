@@ -18,40 +18,39 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("books")
 public class BookController {
 
-    private final BookService bookService;
+  private final BookService bookService;
 
-    @GetMapping("{id}")
-    public ResponseEntity<BookResponseDto> findById(@PathVariable("id") UUID bookId) {
-        return ResponseEntity.ok(bookService.findById(bookId));
-    }
+  @GetMapping("{id}")
+  public ResponseEntity<BookResponseDto> findById(@PathVariable("id") UUID bookId) {
+    return ResponseEntity.ok(bookService.findById(bookId));
+  }
 
   @GetMapping
   public ResponseEntity<List<BookResponseDto>> findAll(
       @RequestParam int page,
       @RequestParam int size,
       @RequestParam(required = false) String filter,
-      @RequestParam(required = false) String sortBy
-  ) {
+      @RequestParam(required = false) String sortBy) {
     Page<BookResponseDto> bookResponseDtos = bookService.findAll(page, size, filter, sortBy);
-        return ResponseEntity.ok(bookResponseDtos.getContent());
-    }
+    return ResponseEntity.ok(bookResponseDtos.getContent());
+  }
 
-    @PostMapping
-    public ResponseEntity<Void> save(@RequestBody BookRequestDto bookRequestDto) {
-        bookService.save(bookRequestDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+  @PostMapping
+  public ResponseEntity<Void> save(@RequestBody BookRequestDto bookRequestDto) {
+    bookService.save(bookRequestDto);
+    return new ResponseEntity<>(HttpStatus.CREATED);
+  }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable("id") UUID bookId, @RequestBody BookRequestDto bookRequestDto) {
-        bookService.update(bookId, bookRequestDto);
-        return ResponseEntity.ok().build();
-    }
+  @PutMapping("{id}")
+  public ResponseEntity<Void> update(
+      @PathVariable("id") UUID bookId, @RequestBody BookRequestDto bookRequestDto) {
+    bookService.update(bookId, bookRequestDto);
+    return ResponseEntity.ok().build();
+  }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable("id") UUID bookId) {
-        bookService.delete(bookId);
-        return ResponseEntity.noContent().build();
-    }
-
+  @DeleteMapping("{id}")
+  public ResponseEntity<Void> deleteById(@PathVariable("id") UUID bookId) {
+    bookService.delete(bookId);
+    return ResponseEntity.noContent().build();
+  }
 }

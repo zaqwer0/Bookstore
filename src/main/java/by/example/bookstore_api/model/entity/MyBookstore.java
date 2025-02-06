@@ -15,14 +15,14 @@ import java.util.UUID;
 @Builder
 @Table(name = "mybookstore")
 public class MyBookstore {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", nullable = false)
-    private Book book;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "book_id", nullable = false)
+  private Book book;
 
-    @Column(nullable = false)
-    private int quantity;
+  @Column(nullable = false)
+  private int quantity;
 }

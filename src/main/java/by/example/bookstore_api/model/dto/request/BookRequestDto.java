@@ -4,11 +4,9 @@ import lombok.Builder;
 
 @Builder
 public record BookRequestDto(
-        String title,
-        String authorName,
-        String authorLastName,
-        double price,
-        Integer publishedYear,
-        String bookstoreName
-) {
-}
+    String title,
+    String authorName,
+    String authorLastName,
+    double price,
+    Integer publishedYear,
+    String bookstoreName) {}

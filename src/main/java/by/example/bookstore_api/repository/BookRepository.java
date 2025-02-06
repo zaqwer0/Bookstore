@@ -12,10 +12,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookRepository extends JpaRepository<Book, UUID> {
 
-    @NonNull
-    List<Book> findAll();
+  @NonNull
+  List<Book> findAll();
 
-    Page<Book> findAllByTitleContaining(@NonNull String title, Pageable pageable);
+  Page<Book> findAllByTitleContaining(@NonNull String title, Pageable pageable);
 
-    boolean existsByTitleAndAuthorLastname(String title, String authorLastName);
+  boolean existsByTitleAndAuthorLastname(String title, String authorLastName);
 }

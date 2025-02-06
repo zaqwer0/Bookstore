@@ -7,14 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.Comparator;
 import java.util.List;
 
-
 @Component("sortByPrice")
 public class SortByPrice implements BookSortedStrategy {
-    @Override
-    public List<Book> sortBooks(List<Book> books) {
-        return books.stream()
-                .sorted(Comparator.comparing(Book::getPrice))
-                .toList();
-
-    }
+  @Override
+  public List<Book> sortBooks(List<Book> books) {
+    return books.stream().sorted(Comparator.comparing(Book::getPrice)).toList();
+  }
 }

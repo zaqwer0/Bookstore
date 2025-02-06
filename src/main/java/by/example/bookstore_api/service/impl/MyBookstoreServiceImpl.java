@@ -58,7 +58,7 @@ public class MyBookstoreServiceImpl implements MyBookstoreService {
   @Transactional
   public void update(UUID bookId, MyBookstoreRequestDto myBookstoreRequestDto) {
 
-      MyBookstore myBookstore =
+    MyBookstore myBookstore =
         myBookstoreRepository
             .findById(bookId)
             .orElseThrow(

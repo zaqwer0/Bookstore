@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class KafkaConsumer {
-   private static final Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
+  private static final Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
 
-    @KafkaListener(topics = "inventory", groupId = "inventory")
-    void listener(String data) {
-        logger.info("Received: {}", data);
-    }
+  @KafkaListener(topics = "inventory", groupId = "inventory")
+  void listener(String data) {
+    logger.info("Received: {}", data);
+  }
 }

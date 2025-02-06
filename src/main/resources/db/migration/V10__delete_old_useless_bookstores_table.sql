@@ -1,1 +1,1 @@
-DROP table if EXISTS bookstores CASCADE ;
+DROP table if EXISTS bookstores CASCADE;

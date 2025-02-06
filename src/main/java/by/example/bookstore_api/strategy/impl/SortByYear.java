@@ -9,10 +9,8 @@ import java.util.List;
 
 @Component("sortByYear")
 public class SortByYear implements BookSortedStrategy {
-    @Override
-    public List<Book> sortBooks(List<Book> books) {
-        return books.stream()
-                .sorted(Comparator.comparingInt(Book::getPublishedYear))
-                .toList();
-    }
+  @Override
+  public List<Book> sortBooks(List<Book> books) {
+    return books.stream().sorted(Comparator.comparingInt(Book::getPublishedYear)).toList();
+  }
 }

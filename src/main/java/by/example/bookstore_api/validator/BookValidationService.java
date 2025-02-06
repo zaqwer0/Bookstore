@@ -10,11 +10,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookValidationService {
 
-    private final List<BookValidator> bookValidators;
+  private final List<BookValidator> bookValidators;
 
-    public void validate(BookRequestDto bookRequestDto) {
-        for (BookValidator validator : bookValidators) {
-            validator.validate(bookRequestDto);
-        }
+  public void validate(BookRequestDto bookRequestDto) {
+    for (BookValidator validator : bookValidators) {
+      validator.validate(bookRequestDto);
     }
+  }
 }

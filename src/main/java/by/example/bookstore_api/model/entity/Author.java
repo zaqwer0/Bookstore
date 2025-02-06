@@ -15,15 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "authors")
 public class Author {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    @Column(nullable = false)
-    private String name;
+  @Column(nullable = false)
+  private String name;
 
-    @Column(nullable = false)
-    private String lastname;
+  @Column(nullable = false)
+  private String lastname;
 
   @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<Book> books;

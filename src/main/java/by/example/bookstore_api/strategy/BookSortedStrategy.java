@@ -5,5 +5,5 @@ import by.example.bookstore_api.model.entity.Book;
 import java.util.List;
 
 public interface BookSortedStrategy {
-    List<Book> sortBooks(List<Book> books);
+  List<Book> sortBooks(List<Book> books);
 }
