@@ -42,7 +42,7 @@ public class Order {
   private Book book;
 
   @Column(nullable = false)
-  private long quantity;
+  private int quantity;
 
   @Column(nullable = false)
   @CreationTimestamp

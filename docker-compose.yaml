@@ -12,7 +12,6 @@ services:
     env_file: .env
 
 
-
   broker:
     image: confluentinc/confluent-local:7.4.1
     hostname: broker

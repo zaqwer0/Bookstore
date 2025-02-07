@@ -13,13 +13,12 @@ public class KafkaProducerService {
   private final KafkaTemplate<String, String> orderStatusKafkaTemplate;
 
   public void sendInventoryReq(Order order) {
+    String bookTitle = order.getBook().getTitle();
+
     OrderEventDto orderEventDto =
         OrderEventDto.builder()
-            .orderId(order.getId())
-            .orderStatus(order.getOrderStatus())
-            .userId(order.getId())
-            .bookId(order.getId())
-            .quantity(order.getQuantity())
+            .bookTitle(bookTitle)
+                .quantity(order.getQuantity())
             .build();
     kafkaTemplate.send("bookstore", orderEventDto);
   }

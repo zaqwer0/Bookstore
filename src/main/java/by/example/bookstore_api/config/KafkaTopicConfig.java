@@ -12,7 +12,7 @@ public class KafkaTopicConfig {
   public NewTopic topic1() {
     return new NewTopic("bookstore", 3, (short) 1);
   }
-
+  @Bean
   public NewTopic topic2() {
     return TopicBuilder.name("topic-2").partitions(3).replicas(1).build();
   }
