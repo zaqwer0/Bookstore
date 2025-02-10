@@ -1,6 +1,7 @@
 package by.example.bookstore_api.service.impl;
 
 import by.example.bookstore_api.kafka.KafkaProducerService;
+import by.example.bookstore_api.kafka.OrderEventDto;
 import by.example.bookstore_api.mapper.OrderMapper;
 import by.example.bookstore_api.model.dto.request.OrderRequestDto;
 import by.example.bookstore_api.model.dto.response.OrderResponseDto;
@@ -79,8 +80,14 @@ public class OrderServiceImpl implements OrderService {
                     .orderStatus(OrderStatus.PROCESSING)
                     .build();
             orderRepository.save(order);
-            kafkaProducerService.sendInventoryReq(order);
-            return orderMapper.toOrderResponseDto(order);
+
+      OrderEventDto orderEventDto =
+          OrderEventDto.builder()
+              .bookTitle(order.getBook().getTitle())
+              .quantity(order.getQuantity())
+              .build();
+      kafkaProducerService.sendInventoryReq(orderEventDto);
+      return orderMapper.toOrderResponseDto(order);
         }
 
     }
