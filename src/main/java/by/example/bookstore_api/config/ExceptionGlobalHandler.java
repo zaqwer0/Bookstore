@@ -21,17 +21,16 @@ public class ExceptionGlobalHandler {
 
   @ExceptionHandler(BookstoreException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ExceptionResponseDto handleAuthorExistsException(
-      HttpServletRequest request, AuthorExists exception) {
-
+  public ExceptionResponseDto handleAuthorExistsException(HttpServletRequest request,
+      AuthorExists exception) {
     log.warn(ERROR_LOG_FORMAT, exception.getMessage(), request.getRequestURL());
     return buildResponse(exception, HttpStatus.BAD_REQUEST, request);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ExceptionResponseDto handleValidationException(
-      HttpServletRequest request, MethodArgumentNotValidException exception) {
+  public ExceptionResponseDto handleValidationException(HttpServletRequest request,
+      MethodArgumentNotValidException exception) {
 
     log.error("Validation error: {}", exception.getMessage());
     return buildResponse(exception, HttpStatus.BAD_REQUEST, request);
@@ -40,14 +39,15 @@ public class ExceptionGlobalHandler {
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public ExceptionResponseDto handleException(HttpServletRequest request, Exception exception) {
-    log.error(ERROR_LOG_FORMAT, exception.getMessage(), request.getRequestURL());
+    log.error(ERROR_LOG_FORMAT, exception.getMessage(), request.getRequestURL(), exception);
+    //todo remove verbose messaging here
     return buildResponse(exception, HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 
   @ExceptionHandler(value = EntityNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ExceptionResponseDto entityNotFoundException(
-      HttpServletRequest request, Exception exception) {
+  public ExceptionResponseDto entityNotFoundException(HttpServletRequest request,
+      Exception exception) {
     log.error(
         ERROR_LOGGING_USING_URI_URL, exception.getMessage(), request.getRequestURL().toString());
     return buildResponse(exception, HttpStatus.NOT_FOUND, request);

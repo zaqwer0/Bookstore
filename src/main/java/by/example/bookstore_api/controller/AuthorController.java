@@ -14,16 +14,17 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("authors")
+//todo replace with api/authors
+@RequestMapping("api/authors")
 public class AuthorController {
 
   private final AuthorService authorService;
 
   @GetMapping("{id}")
   public ResponseEntity<AuthorResponseDto> findById(@PathVariable("id") UUID authorId) {
-
+    //todo spaces
     AuthorResponseDto authorResponse = authorService.findById(authorId);
-
+    //todo remove unnecessary loging
     log.info("Author with ID {} have been found: {}", authorId, authorResponse);
     return ResponseEntity.ok(authorResponse);
   }
@@ -52,6 +53,7 @@ public class AuthorController {
     return ResponseEntity.noContent().build();
   }
 
+  //todo replace with /authors?name= as query param
   @GetMapping("/lastname/{name}")
   public ResponseEntity<AuthorResponseDto> findByLastName(
       @PathVariable("name") String authorLastName) {

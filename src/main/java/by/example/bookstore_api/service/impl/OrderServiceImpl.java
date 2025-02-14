@@ -43,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toOrderResponse(orderRepository.findAll());
     }
 
+    //todo comments required
     public OrderResponseDto save(OrderRequestDto orderRequestDto) {
         User user = userRepository.findById(orderRequestDto.userId())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with id=%s not found", orderRequestDto.userId())));
