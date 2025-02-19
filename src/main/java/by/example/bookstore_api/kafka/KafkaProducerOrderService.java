@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class KafkaProducerService {
+public class KafkaProducerOrderService {
   private final KafkaTemplate<String, OrderEventDto> kafkaTemplate;
 
   public void sendInventoryReq(OrderEventDto order) {

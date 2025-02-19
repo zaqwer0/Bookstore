@@ -1,6 +1,6 @@
 package by.example.bookstore_api.service.impl;
 
-import by.example.bookstore_api.kafka.KafkaProducerService;
+import by.example.bookstore_api.kafka.KafkaProducerOrderService;
 import by.example.bookstore_api.kafka.OrderEventDto;
 import by.example.bookstore_api.mapper.OrderMapper;
 import by.example.bookstore_api.model.dto.request.OrderRequestDto;
@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
     private final MyBookstoreRepository myBookstoreRepository;
-    private final KafkaProducerService kafkaProducerService;
+    private final KafkaProducerOrderService kafkaProducerOrderService;
 
     public OrderResponseDto findById(UUID orderId) {
         return orderRepository.findById(orderId)
@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toOrderResponse(orderRepository.findAll());
     }
 
-    //todo comments required
+    //todo divide current logic
     public OrderResponseDto save(OrderRequestDto orderRequestDto) {
         User user = userRepository.findById(orderRequestDto.userId())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with id=%s not found", orderRequestDto.userId())));
@@ -87,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
               .bookTitle(order.getBook().getTitle())
               .quantity(order.getQuantity())
               .build();
-      kafkaProducerService.sendInventoryReq(orderEventDto);
+      kafkaProducerOrderService.sendInventoryReq(orderEventDto);
       return orderMapper.toOrderResponseDto(order);
         }
 

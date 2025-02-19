@@ -14,26 +14,24 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 public class KafkaInventoryOrderStatusConsumer {
-  private static final Logger logger = LoggerFactory.getLogger(KafkaInventoryOrderStatusConsumer.class);
-
   private final OrderRepository orderRepository;
 
   @KafkaListener(topics = "inventory", groupId = "inventory")
   void listener(InventoryResponseEventDto data) {
-    logger.info("Received: {}", data);
+    log.info("Received: {}", data);
 
     if (data.available()) {
       orderRepository.findByBookTitleAndOrderStatus(data.bookTitle(), OrderStatus.PROCESSING)
               .ifPresent(order -> {
                 order.setOrderStatus(OrderStatus.READY);
                 orderRepository.save(order);
-                logger.info("Order status updated to READY for book: {}", data.bookTitle());
+                log.info("Order status updated to READY for book: {}", data.bookTitle());
               });
 
     }
 
     else {
-      logger.info("Order status updated to NOT READY for book: {}", data.bookTitle());
+      log.info("Order status updated to NOT READY for book: {}", data.bookTitle());
     }
 
   }

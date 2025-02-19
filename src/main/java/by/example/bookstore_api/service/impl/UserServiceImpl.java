@@ -1,6 +1,8 @@
 package by.example.bookstore_api.service.impl;
 
 import by.example.bookstore_api.exception.UserExists;
+import by.example.bookstore_api.kafka.KafkaProducerUserService;
+import by.example.bookstore_api.kafka.UserCreationEventDto;
 import by.example.bookstore_api.mapper.UserMapper;
 import by.example.bookstore_api.model.dto.request.UserRequestDto;
 import by.example.bookstore_api.model.dto.response.UserResponseDto;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final UserMapper userMapper;
+  private final KafkaProducerUserService kafkaProducerUserService;
 
   public UserResponseDto findById(UUID userId) {
     return userRepository
@@ -42,6 +45,13 @@ public class UserServiceImpl implements UserService {
       throw new UserExists(String.format("Username %s already exists", userRequestDto.username()));
     }
     userRepository.save(userMapper.toUser(userRequestDto));
+    UserCreationEventDto userCreationEventDto =
+            UserCreationEventDto.builder()
+                    .id(userMapper.toUser(userRequestDto).getId())
+                    .email(userRequestDto.email())
+                    .build();
+
+    kafkaProducerUserService.sendUserCreationEvent(userCreationEventDto);
   }
 
   public void delete(UUID userId) {

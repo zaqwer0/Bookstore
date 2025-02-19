@@ -10,7 +10,7 @@ public interface AuthorService {
 
   AuthorResponseDto findById(UUID authorId);
 
-  List<AuthorResponseDto> findAll();
+  List<AuthorResponseDto> findAll(String filter);
 
   void save(AuthorRequestDto authorRequestDto);
 
@@ -18,5 +18,4 @@ public interface AuthorService {
 
   void update(UUID authorId, AuthorRequestDto authorRequestDto);
 
-  AuthorResponseDto findByLastName(String lastName);
 }

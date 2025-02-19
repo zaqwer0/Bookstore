@@ -34,8 +34,14 @@ public class AuthorServiceImpl implements AuthorService {
                     String.format("Author with id=%s not found", authorId)));
   }
 
-  public List<AuthorResponseDto> findAll() {
-    return authorMapper.toAuthors(authorRepository.findAll());
+  public List<AuthorResponseDto> findAll(String filter) {
+    List<Author> authors;
+    if (filter == null || filter.isEmpty()) {
+        authors = authorRepository.findAll();
+    } else {
+      authors = authorRepository.findByLastnameContaining(filter);
+    }
+    return authorMapper.toAuthors(authors);
   }
 
   public void save(AuthorRequestDto authorRequestDto) {
@@ -69,13 +75,4 @@ public class AuthorServiceImpl implements AuthorService {
     authorRepository.save(author);
   }
 
-  public AuthorResponseDto findByLastName(String lastName) {
-    return authorRepository
-        .findByLastname(lastName)
-        .map(authorMapper::toAuthorDto)
-        .orElseThrow(
-            () ->
-                new EntityNotFoundException(
-                    String.format("Author with lastName=%s not found", lastName)));
-  }
 }

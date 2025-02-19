@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("bookstores")
 @RequiredArgsConstructor
-//todo why did you add My to the name??
 @Tag(name = "MyBookstoreController", description = "Book operations in the single bookstore")
 public class MyBookstoreController {
 

@@ -16,4 +16,12 @@ public class KafkaTopicConfig {
   public NewTopic topic2() {
     return TopicBuilder.name("topic-2").partitions(3).replicas(1).build();
   }
+  @Bean
+  NewTopic topic3() {
+    return TopicBuilder.name("user-creation-event").partitions(2).replicas(1).build();
+  }
+  @Bean
+  NewTopic topic4() {
+    return TopicBuilder.name("fullOrder").partitions(2).replicas(1).build();
+  }
 }
