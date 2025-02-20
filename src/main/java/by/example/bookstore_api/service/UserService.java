@@ -8,15 +8,13 @@ import java.util.UUID;
 
 public interface UserService {
 
-    UserResponseDto findById(UUID userId);
+  UserResponseDto findById(UUID userId);
 
-    List<UserResponseDto> findAll(String filter);
+  List<UserResponseDto> findAll(String filter);
 
-    void save(UserRequestDto userRequestDto);
+  void save(UserRequestDto userRequestDto);
 
-    void delete(UUID userId);
+  void delete(UUID userId);
 
-    void update(UUID userId, UserRequestDto userRequestDto);
-
+  void update(UUID userId, UserRequestDto userRequestDto);
 }
-

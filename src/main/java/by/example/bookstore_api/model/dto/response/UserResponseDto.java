@@ -4,10 +4,4 @@ import java.util.Date;
 import java.util.UUID;
 
 public record UserResponseDto(
-        UUID id,
-        String username,
-        String password,
-        String email,
-        Date registrationDate
-) {
-}
+    UUID id, String username, String password, String email, Date registrationDate) {}

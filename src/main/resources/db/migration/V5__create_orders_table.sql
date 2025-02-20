@@ -1,4 +1,5 @@
-CREATE table if not exists orders (
+CREATE table if not exists orders
+(
     id           UUID                                      NOT NULL PRIMARY KEY,
     user_id      UUID                                      NOT NULL,
     book_id      UUID                                      NOT NULL,

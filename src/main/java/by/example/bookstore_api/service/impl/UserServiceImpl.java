@@ -1,6 +1,8 @@
 package by.example.bookstore_api.service.impl;
 
 import by.example.bookstore_api.exception.UserExists;
+import by.example.bookstore_api.kafka.KafkaProducerUserService;
+import by.example.bookstore_api.kafka.dto.events.UserCreationEventDto;
 import by.example.bookstore_api.mapper.UserMapper;
 import by.example.bookstore_api.model.dto.request.UserRequestDto;
 import by.example.bookstore_api.model.dto.response.UserResponseDto;
@@ -16,15 +18,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+  private final UserRepository userRepository;
+  private final UserMapper userMapper;
+  private final KafkaProducerUserService kafkaProducerUserService;
 
-
-    public UserResponseDto findById(UUID userId) {
-        return userRepository.findById(userId)
-                .map(userMapper::toUserDto)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id %s not found", userId)));
-    }
+  public UserResponseDto findById(UUID userId) {
+    return userRepository
+        .findById(userId)
+        .map(userMapper::toUserDto)
+        .orElseThrow(
+            () -> new EntityNotFoundException(String.format("User with id %s not found", userId)));
+  }
 
   public List<UserResponseDto> findAll(String filter) {
     List<User> users;
@@ -34,29 +38,38 @@ public class UserServiceImpl implements UserService {
       users = userRepository.findAll();
     }
     return userMapper.toUserResponse(users);
+  }
+
+  public void save(UserRequestDto userRequestDto) {
+    if (userRepository.existsByEmail(userRequestDto.email())) {
+      throw new UserExists(String.format("Username %s already exists", userRequestDto.username()));
     }
+    userRepository.save(userMapper.toUser(userRequestDto));
+    UserCreationEventDto userCreationEventDto =
+            UserCreationEventDto.builder()
+                    .id(userMapper.toUser(userRequestDto).getId())
+                    .email(userRequestDto.email())
+                    .build();
 
-    public void save(UserRequestDto userRequestDto) {
-        if (userRepository.existsByEmail(userRequestDto.email())) {
-            throw new UserExists(String.format("Username %s already exists", userRequestDto.username()));
-        }
-        userRepository.save(userMapper.toUser(userRequestDto));
-    }
+    kafkaProducerUserService.sendUserCreationEvent(userCreationEventDto);
+  }
 
-    public void delete(UUID userId) {
-        userRepository.deleteById(userId);
-    }
+  public void delete(UUID userId) {
+    userRepository.deleteById(userId);
+  }
 
-    public void update(UUID userId, UserRequestDto userRequestDto) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(String.format("User with id %s not found", userId))
-                );
+  public void update(UUID userId, UserRequestDto userRequestDto) {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(
+                () ->
+                    new EntityNotFoundException(
+                        String.format("User with id %s not found", userId)));
 
-        user.setUsername(userRequestDto.username());
-        user.setPassword(userRequestDto.password());
-        user.setEmail(userRequestDto.email());
-        userRepository.save(user);
-
-    }
+    user.setUsername(userRequestDto.username());
+    user.setPassword(userRequestDto.password());
+    user.setEmail(userRequestDto.email());
+    userRepository.save(user);
+  }
 }

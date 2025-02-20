@@ -8,16 +8,14 @@ import org.mapstruct.MappingConstants;
 
 import java.util.List;
 
-
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface AuthorMapper {
 
-    Author toAuthor(AuthorResponseDto authorResponseDto);
+  Author toAuthor(AuthorResponseDto authorResponseDto);
 
-    Author toAuthor(AuthorRequestDto authorRequestDto);
+  Author toAuthor(AuthorRequestDto authorRequestDto);
 
-    List<AuthorResponseDto> toAuthors(List<Author> authorDtos);
+  List<AuthorResponseDto> toAuthors(List<Author> authorDtos);
 
-
-    AuthorResponseDto toAuthorDto(Author author);
+  AuthorResponseDto toAuthorDto(Author author);
 }

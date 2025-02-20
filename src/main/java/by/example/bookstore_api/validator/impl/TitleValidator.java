@@ -7,11 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class TitleValidator implements BookValidator {
 
-    @Override
-    public void validate(BookRequestDto bookRequestDto) throws IllegalArgumentException {
-        if (bookRequestDto.title() == null || bookRequestDto.title().isEmpty()) {
-            throw new IllegalArgumentException("Title cannot be empty");
-        }
+  @Override
+  public void validate(BookRequestDto bookRequestDto) throws IllegalArgumentException {
+    if (bookRequestDto.title() == null || bookRequestDto.title().isEmpty()) {
+      throw new IllegalArgumentException("Title cannot be empty");
     }
-
+  }
 }

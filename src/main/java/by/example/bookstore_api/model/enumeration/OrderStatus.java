@@ -5,13 +5,11 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-
 public enum OrderStatus {
+  PROCESSING("The order is being processed"),
+  READY("The order is ready for confirmation"),
+  DONE("The order is completed"),
+  REFUSAL("The order is canceled");
 
-
-    PACKING("The order is in packing stage"),
-    TRANSIT("Order on the way"),
-    DELIVERED("The order has been delivered");
-
-    private final String description;
+  private final String description;
 }

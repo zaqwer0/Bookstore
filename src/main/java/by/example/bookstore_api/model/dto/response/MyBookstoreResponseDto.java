@@ -4,8 +4,4 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-public record BookstoreResponseDto(
-        UUID id,
-        String name
-) {
-}
+public record MyBookstoreResponseDto(UUID id, String bookTitle, int quantity) {}

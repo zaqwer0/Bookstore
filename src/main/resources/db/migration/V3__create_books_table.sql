@@ -1,4 +1,5 @@
-CREATE table if not exists books (
+CREATE table if not exists books
+(
     id             UUID PRIMARY KEY,
     title          VARCHAR(255)   NOT NULL,
     author_id      UUID           NOT NULL,

@@ -10,7 +10,7 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface OrderMapper {
 
-    Order toOrder(OrderRequestDto orderDto);
+  Order toOrder(OrderRequestDto orderDto);
 
   Order toOrder(OrderResponseDto orderResponseDto);
 

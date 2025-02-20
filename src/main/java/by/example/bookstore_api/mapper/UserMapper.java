@@ -10,11 +10,11 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
-    User toUser(UserResponseDto userResponseDto);
+  User toUser(UserResponseDto userResponseDto);
 
-    User toUser(UserRequestDto userRequestDto);
+  User toUser(UserRequestDto userRequestDto);
 
-    List<UserResponseDto> toUserResponse(List<User> userDtos);
+  List<UserResponseDto> toUserResponse(List<User> userDtos);
 
-    UserResponseDto toUserDto(User user);
+  UserResponseDto toUserDto(User user);
 }

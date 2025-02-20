@@ -7,7 +7,7 @@ import by.example.bookstore_api.model.dto.response.BookResponseDto;
 import by.example.bookstore_api.model.entity.Book;
 import by.example.bookstore_api.repository.BookRepository;
 import by.example.bookstore_api.service.BookService;
-import by.example.bookstore_api.strategy.BookSortedStrategy;
+import by.example.bookstore_api.strategy.sortAuthors.BookSortedStrategy;
 import by.example.bookstore_api.validator.BookValidationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -28,12 +28,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class BookServiceImpl implements BookService {
 
+    private static final String DEFAULT_SORT_STRATEGY = "sortByPrice";
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final Map<String, BookSortedStrategy> bookSortedStrategies;
     private final BookValidationService bookValidationService;
-
-    private static final String DEFAULT_SORT_STRATEGY = "sortByPrice";
 
     @Cacheable("bookCache")
     public BookResponseDto findById(UUID bookId) {

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends CrudRepository<User, UUID> {
 
-    @NonNull
-    List<User> findAll();
+  @NonNull
+  List<User> findAll();
 
-    boolean existsByEmail(String email);
+  boolean existsByEmail(String email);
 
-    List<User> findByUsernameContainingIgnoreCase(String username);
+  List<User> findByUsernameContainingIgnoreCase(String username);
 }

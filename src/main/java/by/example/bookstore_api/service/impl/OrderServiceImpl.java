@@ -4,19 +4,22 @@ import by.example.bookstore_api.mapper.OrderMapper;
 import by.example.bookstore_api.model.dto.request.OrderRequestDto;
 import by.example.bookstore_api.model.dto.response.OrderResponseDto;
 import by.example.bookstore_api.model.entity.Book;
+import by.example.bookstore_api.model.entity.MyBookstore;
 import by.example.bookstore_api.model.entity.Order;
 import by.example.bookstore_api.model.entity.User;
 import by.example.bookstore_api.repository.BookRepository;
+import by.example.bookstore_api.repository.MyBookstoreRepository;
 import by.example.bookstore_api.repository.OrderRepository;
 import by.example.bookstore_api.repository.UserRepository;
 import by.example.bookstore_api.service.OrderService;
+import by.example.bookstore_api.strategy.orderSaving.OrderStatusStrategy;
+import by.example.bookstore_api.strategy.orderSaving.impl.OrderProcessingStatus;
+import by.example.bookstore_api.strategy.orderSaving.impl.OrderReadyStatus;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
@@ -26,6 +29,9 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
+    private final MyBookstoreRepository myBookstoreRepository;
+  private final OrderReadyStatus orderReadyStatus;
+  private final OrderProcessingStatus orderProcessingStatus;
 
     public OrderResponseDto findById(UUID orderId) {
         return orderRepository.findById(orderId)
@@ -37,23 +43,30 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toOrderResponse(orderRepository.findAll());
     }
 
-    public OrderResponseDto save(OrderRequestDto orderRequestDto) {
+  // todo divide current logic (done) do smth with excp
+  public OrderResponseDto save(OrderRequestDto orderRequestDto) {
         User user = userRepository.findById(orderRequestDto.userId())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with id=%s not found", orderRequestDto.userId())));
 
         Book book = bookRepository.findById(orderRequestDto.bookId())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Book with id=%s not found", orderRequestDto.bookId())));
 
-        Order order = Order.builder()
-                .user(user)
-                .book(book)
-                .quantity(orderRequestDto.quantity())
-                .orderDate(LocalDateTime.now())
-                .build();
+        MyBookstore myBookstore = myBookstoreRepository.findByBookId(book.getId())
+                .orElseThrow(() -> new EntityNotFoundException(String.format("MyBookstore with id=%s not found", book.getId())));
 
-        Order savedOrder = orderRepository.save(order);
+    boolean exist = myBookstore.getQuantity() >= orderRequestDto.quantity();
 
-        return orderMapper.toOrderResponseDto(savedOrder);
+    OrderStatusStrategy orderStatusStrategy;
+    orderStatusStrategy = exist ? orderReadyStatus : orderProcessingStatus;
+
+    return orderStatusStrategy.saveOrder(
+        myBookstore,
+        orderRequestDto,
+        myBookstoreRepository,
+        orderMapper,
+        orderRepository,
+        book,
+        user);
     }
 
     public void delete(UUID orderId) {
@@ -69,4 +82,6 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
     }
+
+
 }
