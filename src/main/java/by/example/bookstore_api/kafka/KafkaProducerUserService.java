@@ -1,5 +1,6 @@
 package by.example.bookstore_api.kafka;
 
+import by.example.bookstore_api.kafka.dto.events.UserCreationEventDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

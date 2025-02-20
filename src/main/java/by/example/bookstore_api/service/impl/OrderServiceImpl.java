@@ -1,7 +1,5 @@
 package by.example.bookstore_api.service.impl;
 
-import by.example.bookstore_api.kafka.KafkaProducerOrderService;
-import by.example.bookstore_api.kafka.OrderEventDto;
 import by.example.bookstore_api.mapper.OrderMapper;
 import by.example.bookstore_api.model.dto.request.OrderRequestDto;
 import by.example.bookstore_api.model.dto.response.OrderResponseDto;
@@ -9,14 +7,15 @@ import by.example.bookstore_api.model.entity.Book;
 import by.example.bookstore_api.model.entity.MyBookstore;
 import by.example.bookstore_api.model.entity.Order;
 import by.example.bookstore_api.model.entity.User;
-import by.example.bookstore_api.model.enumeration.OrderStatus;
 import by.example.bookstore_api.repository.BookRepository;
 import by.example.bookstore_api.repository.MyBookstoreRepository;
 import by.example.bookstore_api.repository.OrderRepository;
 import by.example.bookstore_api.repository.UserRepository;
 import by.example.bookstore_api.service.OrderService;
+import by.example.bookstore_api.strategy.orderSaving.OrderStatusStrategy;
+import by.example.bookstore_api.strategy.orderSaving.impl.OrderProcessingStatus;
+import by.example.bookstore_api.strategy.orderSaving.impl.OrderReadyStatus;
 import jakarta.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,8 @@ public class OrderServiceImpl implements OrderService {
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
     private final MyBookstoreRepository myBookstoreRepository;
-    private final KafkaProducerOrderService kafkaProducerOrderService;
+  private final OrderReadyStatus orderReadyStatus;
+  private final OrderProcessingStatus orderProcessingStatus;
 
     public OrderResponseDto findById(UUID orderId) {
         return orderRepository.findById(orderId)
@@ -43,8 +43,8 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toOrderResponse(orderRepository.findAll());
     }
 
-    //todo divide current logic
-    public OrderResponseDto save(OrderRequestDto orderRequestDto) {
+  // todo divide current logic (done) do smth with excp
+  public OrderResponseDto save(OrderRequestDto orderRequestDto) {
         User user = userRepository.findById(orderRequestDto.userId())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with id=%s not found", orderRequestDto.userId())));
 
@@ -54,43 +54,19 @@ public class OrderServiceImpl implements OrderService {
         MyBookstore myBookstore = myBookstoreRepository.findByBookId(book.getId())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("MyBookstore with id=%s not found", book.getId())));
 
-        if (myBookstore.getQuantity() >= orderRequestDto.quantity()) {
+    boolean exist = myBookstore.getQuantity() >= orderRequestDto.quantity();
 
+    OrderStatusStrategy orderStatusStrategy;
+    orderStatusStrategy = exist ? orderReadyStatus : orderProcessingStatus;
 
-        Order order = Order.builder()
-                .user(user)
-                .book(book)
-                .quantity(orderRequestDto.quantity())
-                .orderDate(LocalDateTime.now())
-                .orderStatus(OrderStatus.READY)
-                .build();
-
-
-        Order savedOrder = orderRepository.save(order);
-        myBookstore.setQuantity(myBookstore.getQuantity() - orderRequestDto.quantity());
-        myBookstoreRepository.save(myBookstore);
-
-        return orderMapper.toOrderResponseDto(savedOrder);
-        }
-        else {
-            Order order = Order.builder()
-                    .user(user)
-                    .book(book)
-                    .quantity(orderRequestDto.quantity())
-                    .orderDate(LocalDateTime.now())
-                    .orderStatus(OrderStatus.PROCESSING)
-                    .build();
-            orderRepository.save(order);
-
-      OrderEventDto orderEventDto =
-          OrderEventDto.builder()
-              .bookTitle(order.getBook().getTitle())
-              .quantity(order.getQuantity())
-              .build();
-      kafkaProducerOrderService.sendInventoryReq(orderEventDto);
-      return orderMapper.toOrderResponseDto(order);
-        }
-
+    return orderStatusStrategy.saveOrder(
+        myBookstore,
+        orderRequestDto,
+        myBookstoreRepository,
+        orderMapper,
+        orderRepository,
+        book,
+        user);
     }
 
     public void delete(UUID orderId) {
@@ -106,4 +82,6 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
     }
+
+
 }

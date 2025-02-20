@@ -1,4 +1,4 @@
-package by.example.bookstore_api.strategy;
+package by.example.bookstore_api.strategy.sortAuthors;
 
 import by.example.bookstore_api.model.entity.Book;
 

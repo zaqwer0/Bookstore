@@ -1,7 +1,7 @@
-package by.example.bookstore_api.strategy.impl;
+package by.example.bookstore_api.strategy.sortAuthors.impl;
 
 import by.example.bookstore_api.model.entity.Book;
-import by.example.bookstore_api.strategy.BookSortedStrategy;
+import by.example.bookstore_api.strategy.sortAuthors.BookSortedStrategy;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;

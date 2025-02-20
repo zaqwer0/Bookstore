@@ -1,4 +1,4 @@
-package by.example.bookstore_api.kafka;
+package by.example.bookstore_api.kafka.dto.events;
 
 import lombok.Builder;
 

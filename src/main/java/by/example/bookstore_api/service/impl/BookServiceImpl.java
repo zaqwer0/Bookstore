@@ -7,7 +7,7 @@ import by.example.bookstore_api.model.dto.response.BookResponseDto;
 import by.example.bookstore_api.model.entity.Book;
 import by.example.bookstore_api.repository.BookRepository;
 import by.example.bookstore_api.service.BookService;
-import by.example.bookstore_api.strategy.BookSortedStrategy;
+import by.example.bookstore_api.strategy.sortAuthors.BookSortedStrategy;
 import by.example.bookstore_api.validator.BookValidationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;

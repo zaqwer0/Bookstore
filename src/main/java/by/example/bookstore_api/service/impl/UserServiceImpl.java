@@ -2,7 +2,7 @@ package by.example.bookstore_api.service.impl;
 
 import by.example.bookstore_api.exception.UserExists;
 import by.example.bookstore_api.kafka.KafkaProducerUserService;
-import by.example.bookstore_api.kafka.UserCreationEventDto;
+import by.example.bookstore_api.kafka.dto.events.UserCreationEventDto;
 import by.example.bookstore_api.mapper.UserMapper;
 import by.example.bookstore_api.model.dto.request.UserRequestDto;
 import by.example.bookstore_api.model.dto.response.UserResponseDto;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("bookstores")
+@RequestMapping("api/bookstores")
 @RequiredArgsConstructor
 @Tag(name = "MyBookstoreController", description = "Book operations in the single bookstore")
 public class MyBookstoreController {
