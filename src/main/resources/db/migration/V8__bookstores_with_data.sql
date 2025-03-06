@@ -1,4 +1,4 @@
-INSERT into bookstores      (id, name)
+INSERT into bookstores (id, name)
 VALUES ('111e8400-e29b-41d4-a716-446655440000', 'shop'),
        ('111e8400-e29b-41d4-a716-446655440001', 'book'),
        ('111e8400-e29b-41d4-a716-446655440002', 'bookshop'),
